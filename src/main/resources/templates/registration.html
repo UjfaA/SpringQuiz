@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Spring Quiz - registration</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 th:replace="~{fragments/Navigation :: nav}" >
+	 </nav>
+	<div class="w3-panel" align="center">
+		<h4 align="center">Register new account</h4>
+		<form class="w3-container w3-card  w3-light-grey" style="width:50%;"
+			action="#" th:action="@{/registration}" th:object="${user}" method="post">
+				
+				<p align="left">
+				<label th:for="firstName">First Name:</label>
+				<input class="w3-input w3-border"
+					th:field="*{firstName}" autofocus />
+				</p>
+				<p align="left">
+				<label th:for="lastName">Last Name:</label>
+				<input class="w3-input w3-border" 
+					th:field="*{lastName}" />
+				</p>
+				<p align="left">
+				<label th:for="email">Email:</label>
+				<input class="w3-input w3-border" 
+					type="email" th:field="*{email}" />
+				</p>
+				<p align="left">
+				<label th:for="username">Username:</label>
+				<input class="w3-input w3-border" 
+					th:field="*{username}" required />
+				</p>
+				<p align="left">
+				<label th:for="password">Password:</label>
+				<input class="w3-input w3-border" 
+					type="password" th:field="*{password}" required />
+				</p>
+				<p align="left">
+				<label th:for="${#ids.next('administrator')}">Administrator:</label>
+				<input class="w3-check"
+					type="checkbox" th:field="*{administrator}"/>
+				</p>
+				<p>
+					<input class="w3-btn w3-block w3-green w3-m"
+					type="submit" value="Register" />
+				</p>
+				
+		</form>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>

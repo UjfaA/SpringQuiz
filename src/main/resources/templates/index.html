@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title> Spring Quiz - Home</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 th:replace="~{fragments/Navigation :: nav}" >
+	 </nav>
+	<div class="w3-container" align="center">
+		<h2 th:text = "${'Welcome ' + session.userFirstName}"> </h2>
+	</div>
+	<div class="w3-container" align="center">
+		<a th:href="@{/start}" class="w3-btn w3-green">Start Quiz</a>
+	</div>
+	<div class="w3-container" align="center"
+			sec:authorize="hasRole('ROLE_ADMIN')">
+			<p>admin's stuff</p>
+	</div>
+</body>
+</html>

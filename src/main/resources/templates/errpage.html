@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title> Spring Quiz - Error </title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<div>
+	<h2>There was an error</h2>
+	<h5 th:text="${errorMessage}"></h5>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>

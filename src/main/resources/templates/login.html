@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title>Spring Quiz - Login</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 th:replace="~{fragments/Navigation :: nav}" >
+	 </nav>
+	<div class="w3-container" align="center">
+		<h2 th:text="Welcome"></h2>
+	</div>
+	<div class="w3-panel" align="center">
+		<h4 align="center">Please log in:</h4>
+		<form class ="w3-container w3-card w3-light-grey" style="width:50%;"
+			th:action="@{/login}" method="post">
+			
+			<p align="left">
+			<label th:for="username">Username:</label>
+			<input class="w3-input w3-border" 
+				type="text" name="username" id="username" required="required" autofocus="autofocus" />
+			</p>
+			<p align="left">
+			<label for="password">Password:</label>
+			<input class="w3-input w3-border" 
+				type="password" name="password" id="password" required="required" />
+			</p>
+			<p>
+			<input class="w3-btn w3-block w3-green w3-m"
+				type="submit" value="Login">
+			</p>
+		</form>
+	</div>
+	<div align="center">
+		<p th:text="${message}"></p>
+	</div>
+	<div align="center">
+		<p> If you don't have an account click 
+			<a th:href="@{/registration}"> Register new account</a>
+		</p>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>

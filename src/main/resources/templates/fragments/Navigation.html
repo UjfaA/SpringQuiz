@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<title>Navigation</title>
+</head>
+<body>
+	<nav>
+		<div class="w3-bar w3-light-grey ">
+    		<a th:href = "@{/}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">Home</a>
+       		<a th:href = "@{/about}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">About</a>
+       		
+			<div sec:authorize="isAuthenticated()">
+				<a th:href="@{/logout}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black w3-right"> log out </a>
+       			<div align="center" class="w3-bar-item w3-hover-none w3-text-grey w3-right">
+       				 username: <span sec:authentication ="name"></span> 
+       			</div>
+       		</div>
+		</div>
+	</nav>
+</body>
+</html>
