@@ -7,7 +7,8 @@
 <title>Navigation</title>
 </head>
 <body>
-	<nav>
+	<!-- Main navigation -->
+	<nav th:fragment="navigation">
 		<div class="w3-bar w3-light-grey ">
     		<a th:href = "@{/}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">Home</a>
        		<a th:href = "@{/about}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">About</a>
@@ -18,6 +19,17 @@
        				 username: <span sec:authentication ="name"></span> 
        			</div>
        		</div>
+		</div>
+	</nav>
+	
+	<!-- admin tools navigation -->
+	<nav th:fragment="adminTools"
+		sec:authorize="hasRole('ROLE_ADMIN')">
+		<div class="w3-center w3-padding-64">
+			<div class="w3-bar">
+				<a th:href="@{/questions}" class="w3-button w3-small w3-green"> Questions </a>
+				<a th:href="@{/users}" class="w3-button w3-small w3-green"> Users </a>
+			</div>
 		</div>
 	</nav>
 </body>

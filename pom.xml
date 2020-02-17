@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ujfaA</groupId>
-	<artifactId>spring-boot-template</artifactId>
-	<version>1.0</version>
+	<artifactId>springQuiz</artifactId>
+	<version>0.1a</version>
 	<packaging>war</packaging>
-	<name>SpringBootTemplate</name>
-	<description>Spring Boot Template</description>
+	<name>SpringQuiz</name>
+	<description>SpringQuiz web app</description>
 
 	<properties>
 		<java.version>1.8</java.version>

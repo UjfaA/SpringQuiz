@@ -48,6 +48,11 @@ public class SecurityController {
 		if (error == true)
 			message = "Wrong username or password.";
 		model.addAttribute("message", message);
-		return"login";
+		return "login";
+	}
+	
+	@GetMapping("/errpage")
+	public String handleError() {
+		return "errpage";
 	}
 }

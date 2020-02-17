@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="formStyle.css">
+	<title> Spring Quiz - Questions - New</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 	th:replace="~{fragments/Navigation :: navigation}" >
+	 </nav>
+	 <div class="w3-panel w3-padding w3-center">
+	 	<h4 align="center">Create new question</h4>
+		<form th:action="@{/questions/new}" method="get">
+			
+			<p th:text= "'Number of answers: '"> </p>
+			
+			<select name="numberOfAnswers">
+  				<option th:each="n : ${#numbers.sequence(2, MAX_ANSWERS)}" 
+  						th:value="${n}" th:text="${n}" th:selected="${n EQ numberOfAnswers}"></option>
+			</select>
+			<input type="submit" value="Refresh" />
+		</form>
+	</div>
+	 <div class="w3-panel" align="center">
+		<form class="w3-container w3-card w3-light-grey" style="width:80%;"
+			action="#" th:action="@{/questions/new}" th:object="${question}" method="post">
+				
+				<input type="hidden" name="numberOfAnswers" th:value="${numberOfAnswers}" />
+				
+				<p align="left">
+				<label th:for="questionText">Question:</label>
+				<input class="w3-input w3-border"
+					th:field="*{questionText}" autofocus />
+				</p>
+				<div class="w3-quarter w3-right" align="center">
+					<label th:text="'Correct answer:'"> Correct answer </label>
+				</div>
+				
+				<div th:each="n : ${#numbers.sequence(1, numberOfAnswers)}">
+					<div align="left">
+						<label th:for="${#ids.next('answers')}" 
+							th:text="${'Answer ' + n + ':'}">Answer:
+						</label>
+					</div>
+ 					<div class="w3-row">
+    					<div class="w3-threequarter">
+							<input class=" w3-input w3-border"
+									name="answers" th:value="${ n <= #lists.size(question.answers) ? question.answers[n-1] : ''}"  
+						 			th:id="${#ids.seq('answers')}" />
+    					</div>
+    					<div class="w3-quarter">
+							<input class="w3-radio"
+								type="radio" th:field="*{correctAnswerIndex}" th:value="${n-1}"/>
+    					</div>
+  					</div>
+				</div>
+	
+				<p>
+					<input class="w3-btn w3-block w3-green w3-m"
+					type="submit" value="Add question" />
+				</p>
+		</form>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>
