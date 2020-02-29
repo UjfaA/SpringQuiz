@@ -10,7 +10,7 @@
 	<!-- Main navigation -->
 	<nav th:fragment="navigation">
 		<div class="w3-bar w3-light-grey ">
-    		<a th:href = "@{/}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">Home</a>
+    		<a th:href = "@{/home}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">Home</a>
        		<a th:href = "@{/about}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">About</a>
        		
 			<div sec:authorize="isAuthenticated()">

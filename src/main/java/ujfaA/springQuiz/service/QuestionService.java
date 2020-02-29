@@ -31,18 +31,22 @@ public class QuestionService {
 	*/
 		return questionRepo.findAll();
 	}
-
-	public Question getQuestionByQuestionText(String questionText) {
-		return questionRepo.findByQuestionText(questionText);
-	}
 	
 	public int getNumberOfQuestions() {
 		return (int) questionRepo.count();
 	}
 	
-	public Question getQuestionByIndex(int qindex) {
+	public Question getQuestionById(long id) {
+		return questionRepo.findById(id).orElseThrow();
+	}
+	
+	public Question getQuestionByQuestionText(String questionText) {
+		return questionRepo.findByQuestionText(questionText);
+	}
 		
-		Pageable pageRequest = PageRequest.of(qindex, 1);
+	public Question getQuestionByIndex(int qIndex) {
+		
+		Pageable pageRequest = PageRequest.of(qIndex, 1);
 		Page<Question> page = questionRepo.findByOrderById(pageRequest);
 		if ( ! page.hasContent())
 			throw new IndexOutOfBoundsException();
@@ -52,8 +56,9 @@ public class QuestionService {
 	public Question save(Question q) {
 		
 		List<String> ans = q.getAnswers();
-		String correctAnswer = ans.get(q.getCorrectAnswerIndex());  
+		String correctAnswer = ans.get(q.getSelectedAnswerIndex());  
 		q.setCorrectAnswer(correctAnswer);
+
 		return questionRepo.save(q);
 	}
 	

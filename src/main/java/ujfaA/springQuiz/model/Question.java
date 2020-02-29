@@ -1,23 +1,11 @@
 package ujfaA.springQuiz.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,27 +26,22 @@ public class Question{
 	@Column(nullable = false)
 	private String correctAnswer;
 	
-	@Transient
-	private int correctAnswerIndex;
-	
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "question_answers")
+	@Column(name = "answer")
 	private List<String> answers = new ArrayList<String>();
+
+	@Transient
+	private int selectedAnswerIndex;
 	
-	@ManyToMany(mappedBy = "questionsAnswered")
-	private Set<User> usersAnswered = new HashSet<User>();
-	
-	@ManyToMany(mappedBy = "questionsAnsweredCorrectly")
-	private Set<User> usersAnsweredCorrectly = new HashSet<User>();
+	@ElementCollection(fetch = FetchType.LAZY)
+	@CollectionTable(name = "users_answered", joinColumns = @JoinColumn(name = "Question_id"))
+	@MapKeyJoinColumn(name = "user_id")
+	@Column(name = "chosen_answer")
+	private Map<User,String> usersAnswered = new HashMap<User, String>();
 	
 	
 	public Question() {
-	}
-
-	public double getCorrectnesstPercent() {
-		if (usersAnswered.isEmpty()) 
-			return -1.0;
-		else
-			return (usersAnsweredCorrectly.size() * 1.0) / usersAnswered.size();
 	}
 	
 	@Override

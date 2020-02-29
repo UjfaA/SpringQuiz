@@ -1,8 +1,6 @@
 package ujfaA.springQuiz.model;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -38,19 +36,7 @@ public class User {
 	private String lastName;	
 
 	private LocalDateTime lastActive;
-	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "QUESTIONS_ANSWERED_BY_USER",
-			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName="id"),
-			inverseJoinColumns = @JoinColumn(name = "QUESTION_ID", referencedColumnName = "id"))
-	Set<Question> questionsAnswered = new HashSet<>();
-	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(name = "QUESTIONS_ANSWERED_CORRECTLY_BY_USER", 
-			joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName="id"),
-			inverseJoinColumns = @JoinColumn(name = "QUESTION_ID", referencedColumnName = "id") )
-	private Set<Question> questionsAnsweredCorrectly = new HashSet<Question>();
-	
+
 	
 	// for Spring
 	public boolean getAdministrator() {

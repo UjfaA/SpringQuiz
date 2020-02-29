@@ -26,7 +26,7 @@ public class UserService {
 	}
 	
 	public User getUser(String username) {
-		return userRepo.findByUsername(username).get();
+		return userRepo.findByUsername(username).orElseThrow();
 	}
 	
 	public User register(User user) {

@@ -57,4 +57,8 @@ public class QuizAdministratorController {
 		return "redirect:/questions";
 	}
 	
+	@GetMapping("/users")
+	public String getUsers() {
+		return "usersInfo";
+	}
 }

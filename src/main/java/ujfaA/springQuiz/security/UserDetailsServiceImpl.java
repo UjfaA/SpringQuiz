@@ -1,4 +1,4 @@
-package ujfaA.springQuiz.service;
+package ujfaA.springQuiz.security;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

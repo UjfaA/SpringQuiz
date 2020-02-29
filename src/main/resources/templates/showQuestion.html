@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" type="text/css" href="formStyle.css">
+	<title> Spring Quiz - Questions</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 	th:replace="~{fragments/Navigation :: navigation}" >
+	 </nav>
+	 <div class="w3-container w3-padding w3-center">
+	 	<h4 align="center" th:text="${'Question ' + (qIndex + 1)  + '/' + numberOfQuestions}"> Question</h4>
+	 	<div align="center">
+			<form class="w3-container w3-card w3-center w3-light-grey" style="width:80%;"
+				th:action="@{/quiz/show}" method="post">
+				
+				<input type="hidden" name="questionId" th:value="${questionId}">
+				<input type="hidden" name="qIndex" th:value="${qIndex}">
+				<p align="left">
+					<b th:text="${'&emsp;' + questionText}">Question Text</b>
+				 </p>
+				 <p align="left"
+				 	th:each="answer,loop : ${answers}">
+  					<input class="w3-radio" 
+  						type="radio" 
+  						th:name="selectedAnswer" th:value="${answer}"
+  						th:id="${'ans' + loop.index}">
+  					<label th:for="${'ans' + loop.index}" th:text="${answer}"> Answer </label></p>
+  				<p>
+				<p>
+					<input class="w3-btn w3-block w3-green w3-m"
+					type="submit" value="Submit answer" />
+				</p>
+			</form>
+		</div>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>

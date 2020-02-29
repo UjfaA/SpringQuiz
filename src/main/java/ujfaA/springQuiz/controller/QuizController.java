@@ -4,9 +4,13 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.service.QuestionService;
 import ujfaA.springQuiz.service.QuizService;
 
@@ -23,8 +27,13 @@ public class QuizController {
 	public String home() {
 		return "index";
 	}
+
+	@GetMapping("/about")
+	public String about() {
+		return "about";
+	}
 	
-	@GetMapping("/start")
+	@GetMapping("/quiz/start")
 	public String resetAndStart( Principal principal, RedirectAttributes redirectAttr) {
 
 		if (questionService.getNumberOfQuestions() == 0) {
@@ -34,8 +43,44 @@ public class QuizController {
 		}
 		
 //		quizService.resetScore(principal.getName());
-		redirectAttr.addAttribute("qIndex", 0);
-		return "redirect:/showQuestion";
+		redirectAttr.addAttribute("q", 0);
+		return "redirect:/quiz/show";
 	}
 	
+	@GetMapping("/quiz/show")
+	public String showQuestion(@RequestParam(name = "q") int qIndex, ModelMap model) {
+		
+		int numberOfQuestions = questionService.getNumberOfQuestions();
+		
+		if (qIndex < numberOfQuestions) {			
+			
+			Question question = questionService.getQuestionByIndex(qIndex);
+			model.addAttribute("qIndex", qIndex);
+			model.addAttribute("numberOfQuestions", numberOfQuestions);
+			model.addAttribute("questionText", question.getQuestionText());
+			model.addAttribute("questionId", question.getId());
+			model.addAttribute("answers", question.getAnswers());
+			return "showQuestion";
+		}
+		else {
+			return "redirect:/quiz/completed";	
+			}
+	}
+	
+	@PostMapping("/quiz/show")
+	public String userAnswered( Principal principal,
+								@RequestParam Long questionId,
+								@RequestParam String selectedAnswer,
+								@RequestParam int qIndex) {
+
+		String username = principal.getName();
+		quizService.storeUsersAnswer(username, questionId, selectedAnswer);
+
+		return "redirect:/quiz/show?q=" + (qIndex + 1);
+	}
+	
+	@GetMapping("/quiz/completed")
+	public String onCompletion() {
+		return "completion";
+	}
 }
