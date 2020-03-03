@@ -1,9 +1,7 @@
 package ujfaA.springQuiz.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.*;
 
@@ -12,12 +10,13 @@ import lombok.Setter;
 
 
 @Entity
-@Table(name="QUESTIONS")
+@Table(name="questions")
 @Getter @Setter
 public class Question{
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "question_id")
 	private Long id;
 	
 	@Column(unique = true, nullable = false)
@@ -27,19 +26,12 @@ public class Question{
 	private String correctAnswer;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "question_answers")
+	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question_id"))
 	@Column(name = "answer")
-	private List<String> answers = new ArrayList<String>();
+	private List<String> answers = new ArrayList<String>(); //contains correctAnswer
 
 	@Transient
 	private int selectedAnswerIndex;
-	
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "users_answered", joinColumns = @JoinColumn(name = "Question_id"))
-	@MapKeyJoinColumn(name = "user_id")
-	@Column(name = "chosen_answer")
-	private Map<User,String> usersAnswered = new HashMap<User, String>();
-	
 	
 	public Question() {
 	}

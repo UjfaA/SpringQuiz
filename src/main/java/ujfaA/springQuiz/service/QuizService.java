@@ -16,13 +16,16 @@ public class QuizService {
 	@Autowired
 	private UserService userService;
 	
-	public void storeUsersAnswer(String username, Long questionId, String selectedAnswer) {
+	public void storeUsersAnswer(String username, Long questionId, String answer) {
 		
 		Question question = questionService.getQuestionById(questionId);
 		User user = userService.getUser(username);
-		
-		question.getUsersAnswered().put(user, selectedAnswer);
-		questionService.save(question);
+		user.storeAnsweredQuestion(question, answer);
+		userService.update(user);
+	}
+
+	public int getUserScore(String username) {
+		return userService.getScore(username);
 	}
 
 }

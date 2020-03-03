@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.repository.QuestionRepository;
 
-
-
 @Service
 @Transactional
 public class QuestionService {
@@ -23,12 +21,7 @@ public class QuestionService {
 	@Autowired
 	private QuestionRepository questionRepo;
 	
-	public List<Question> listAll() {
-	/*
-		List<Question> list = new ArrayList<Question>();
-		questionRepo.findAll().forEach(list::add);
-		return list;
-	*/
+	public Iterable<Question> listAll() {
 		return questionRepo.findAll();
 	}
 	
@@ -55,8 +48,8 @@ public class QuestionService {
 	
 	public Question save(Question q) {
 		
-		List<String> ans = q.getAnswers();
-		String correctAnswer = ans.get(q.getSelectedAnswerIndex());  
+		List<String> ansList = q.getAnswers();
+		String correctAnswer = ansList.get(q.getSelectedAnswerIndex());  
 		q.setCorrectAnswer(correctAnswer);
 
 		return questionRepo.save(q);
@@ -75,13 +68,4 @@ public class QuestionService {
 		return set.size() != question.getAnswers().size();
 	}
 
-/*
-	public List<Question> listAllOrderedByCorrectnes() {
-		List<Question> questions = this.listAll();
-		questions.sort((q1, q2) -> { return Double.compare(	q2.getCorrectnesstPercent(),
-															q1.getCorrectnesstPercent() );
-		});
-		return questions;
-	}
-*/
 }

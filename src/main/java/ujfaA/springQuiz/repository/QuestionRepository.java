@@ -1,6 +1,5 @@
 package ujfaA.springQuiz.repository;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
@@ -13,8 +12,6 @@ import ujfaA.springQuiz.model.Question;
 
 public interface QuestionRepository extends PagingAndSortingRepository<Question, Long> {
 	
-	@Override
-	List<Question> findAll();
 	
 	public Question findByQuestionText(String questionText);
 

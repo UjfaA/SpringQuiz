@@ -21,7 +21,12 @@ public class QuizController {
 	QuestionService questionService;
 	@Autowired
 	QuizService quizService;
+
 	
+	@GetMapping("/d")
+	public String debug() {
+		return "index";
+	}
 	
 	@GetMapping({ "/", "/home" })
 	public String home() {
@@ -42,7 +47,7 @@ public class QuizController {
 			return "redirect:/errpage";
 		}
 		
-//		quizService.resetScore(principal.getName());
+// TODO	quizService.resetScore(principal.getName());
 		redirectAttr.addAttribute("q", 0);
 		return "redirect:/quiz/show";
 	}
@@ -80,7 +85,9 @@ public class QuizController {
 	}
 	
 	@GetMapping("/quiz/completed")
-	public String onCompletion() {
+	public String onCompletion(Principal principal, ModelMap model) {
+		String username = principal.getName();
+		model.addAttribute("score", quizService.getUserScore(username));
 		return "completion";
 	}
 }

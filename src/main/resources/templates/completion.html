@@ -15,7 +15,7 @@
 	 	th:replace="~{fragments/Navigation :: navigation}" >
 	 </nav>
 	 <h2 align="center"> You completed the Quiz </h2>
-	 <p align="center"> This page is under construction</p>
+	 <p align="center" th:text="${'Your score is: ' + score}"> Your score is: /score/ </p>
 	 <footer
 		th:replace="~{fragments/HeaderAndFooter :: footer}">
 	</footer>

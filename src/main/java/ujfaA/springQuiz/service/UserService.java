@@ -1,13 +1,14 @@
 package ujfaA.springQuiz.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.model.User;
 import ujfaA.springQuiz.repository.UserRepository;
 
@@ -40,13 +41,28 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
-	public List<User> listAll() {
-		List<User> list = new ArrayList<User>();
-		userRepo.findAll().forEach(list::add);
-		return list;
+	public Iterable<User> listAll() {
+		return userRepo.findAll();
 	}
 	
 	public void deleteUser(User user) {
 		userRepo.delete(user);
 	}
+
+	public Set<String> getUsernamesThatAnswered(Question q, boolean correctly ) {
+		if (correctly)
+			return userRepo.getUsernamesThatAnsweredWith(q, q.getCorrectAnswer());
+		else
+			return userRepo.getUsernamesThatAnswered(q);
+	}
+
+	public HashSet<String> getUsernamesThatAnsweredEveryQ(boolean correctly) {
+		// TODO Auto-generated method stub
+		return new HashSet<String>();
+	}
+	
+	public int getScore(String username) {
+		return userRepo.countCorrectAnswers(username);
+	}
+
 }
