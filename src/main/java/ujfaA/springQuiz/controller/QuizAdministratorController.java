@@ -1,5 +1,6 @@
 package ujfaA.springQuiz.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -60,14 +61,25 @@ public class QuizAdministratorController {
 	
 	@PostMapping("/questions/delete")
 	public String deleteQuestion(@RequestParam Long id) {
+		//TODO remove deleted question from user.answers 
 		questionService.delete(id);
 		return "redirect:/questions";
 	}
 	
-	@GetMapping("/questions/userEng")
-	public String getUserEngagement(@RequestParam(name = "q", defaultValue = "-1") int qIndex,
+	@GetMapping("/users")
+	public String getUsers() {
+		return "usersInfo";
+	}
+	
+	@GetMapping("/users/usersEng")
+	public String getUserEngagement(@RequestParam(name = "q", defaultValue = "0") int qIndex,
 									@RequestParam(name = "correctly", defaultValue = "false") boolean correctly,
 									ModelMap model) {
+
+		model.addAttribute("texts", questionService.GetQuestionsText());
+		model.addAttribute("selectedIndex", qIndex);
+		model.addAttribute("checked", correctly);
+		
 		if (qIndex == -1) {
 			model.addAttribute("usernames", userService.getUsernamesThatAnsweredEveryQ(correctly));
 		}
@@ -75,11 +87,7 @@ public class QuizAdministratorController {
 			Question q = questionService.getQuestionByIndex(qIndex);
 			model.addAttribute("usernames", userService.getUsernamesThatAnswered(q, correctly));
 		}
-		return"questionsUserEng";
+		return"usersEngagement";
 	}
 	
-	@GetMapping("/users")
-	public String getUsers() {
-		return "usersInfo";
-	}
 }

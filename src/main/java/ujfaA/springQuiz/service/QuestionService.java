@@ -59,7 +59,7 @@ public class QuestionService {
 		questionRepo.deleteById(id);
 	}
 	
-	public Set<String> GetQuestionsText() {
+	public List<String> GetQuestionsText() {
 		return questionRepo.findAllQuestionTexts();
 	}
 
