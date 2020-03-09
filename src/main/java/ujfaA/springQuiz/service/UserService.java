@@ -1,6 +1,5 @@
 package ujfaA.springQuiz.service;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +55,11 @@ public class UserService {
 			return userRepo.getUsernamesThatAnswered(q);
 	}
 
-	public HashSet<String> getUsernamesThatAnsweredEveryQ(boolean correctly) {
-		// TODO Auto-generated method stub
-		return new HashSet<String>();
+	public Set<String> getUsernamesThatAnsweredEveryQ(boolean correctly) {
+		if (correctly)
+			return userRepo.getUsernamesThatCorrectlyAnsweredEveryQuestion();
+		else
+			return userRepo.getUsernamesThatAnsweredEveryQuestion();
 	}
 	
 	public int getScore(String username) {

@@ -72,7 +72,7 @@ public class QuizAdministratorController {
 	}
 	
 	@GetMapping("/users/usersEng")
-	public String getUserEngagement(@RequestParam(name = "q", defaultValue = "0") int qIndex,
+	public String getUserEngagement(@RequestParam(name = "q", defaultValue = "-1") int qIndex,
 									@RequestParam(name = "correctly", defaultValue = "false") boolean correctly,
 									ModelMap model) {
 
