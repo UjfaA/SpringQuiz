@@ -65,5 +65,9 @@ public class UserService {
 	public int getScore(String username) {
 		return userRepo.countCorrectAnswers(username);
 	}
+	
+	public void removeFromUsersAnswers(long questionId) {
+		userRepo.removeFromUsersAnswers(questionId);
+	}
 
 }

@@ -60,9 +60,8 @@ public class QuizAdministratorController {
 	}
 	
 	@PostMapping("/questions/delete")
-	public String deleteQuestion(@RequestParam Long id) {
-		//TODO remove deleted question from user.answers 
-		questionService.delete(id);
+	public String removeQuestion(@RequestParam Long id) {
+		quizService.removeQuestion(id);
 		return "redirect:/questions";
 	}
 	

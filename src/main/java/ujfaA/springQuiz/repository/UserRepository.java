@@ -3,6 +3,7 @@ package ujfaA.springQuiz.repository;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -29,24 +30,28 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	public Set<String> getUsernamesThatAnsweredWith(Question question, String answer);
 	
 	@Query(nativeQuery = true,
-			value = "SELECT users.username"
-					+ " FROM users RIGHT JOIN ("
-					+ " 	SELECT user_id, count(*) AS questionsAnswered"
-					+ "		FROM users_answers"
-					+ "		GROUP BY user_id ) AS t1"
-					+ "	ON users.user_id = t1.user_id"
-					+ " WHERE questionsAnswered = (SELECT count(*) FROM questions)")
+		value = "SELECT users.username"
+			+ " FROM users RIGHT JOIN ("
+			+ " 	SELECT user_id, count(*) AS questionsAnswered"
+			+ "		FROM users_answers"
+			+ "		GROUP BY user_id ) AS t1"
+			+ "	ON users.user_id = t1.user_id"
+			+ " WHERE questionsAnswered = (SELECT count(*) FROM questions)")
 	public Set<String> getUsernamesThatAnsweredEveryQuestion();
 	
 	@Query(nativeQuery = true,
-			value = "SELECT users.username"
-					+ " FROM users RIGHT JOIN ("
-					+ " 	SELECT user_id, count(*) AS questionsAnsweredCorrectly"
-					+ "		FROM users_answers JOIN questions q ON users_answers.question_id = q.question_id"
-					+ "		WHERE users_answers.answer = q.correct_answer"
-					+ "		GROUP BY user_id ) AS t1"
-					+ "	ON users.user_id = t1.user_id"
-					+ " WHERE questionsAnsweredCorrectly = (SELECT count(*) FROM questions)")
+		value = "SELECT users.username"
+			+ " FROM users RIGHT JOIN ("
+			+ " 	SELECT user_id, count(*) AS questionsAnsweredCorrectly"
+			+ "		FROM users_answers NATURAL JOIN questions"
+			+ "		WHERE answer = correct_answer"
+			+ "		GROUP BY user_id ) AS t1"
+			+ "	ON users.user_id = t1.user_id"
+			+ " WHERE questionsAnsweredCorrectly = (SELECT count(*) FROM questions)")
 	public Set<String> getUsernamesThatCorrectlyAnsweredEveryQuestion();
-
+	
+	@Modifying
+	@Query(nativeQuery = true,
+		value = "DELETE FROM users_answers WHERE question_id = ?1")
+	public void removeFromUsersAnswers(long questionId);
 }

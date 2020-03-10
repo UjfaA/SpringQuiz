@@ -27,5 +27,10 @@ public class QuizService {
 	public int getUserScore(String username) {
 		return userService.getScore(username);
 	}
+	
+	public void removeQuestion(Long questionId) {
+		userService.removeFromUsersAnswers(questionId);
+		questionService.delete(questionId);
+	}
 
 }
