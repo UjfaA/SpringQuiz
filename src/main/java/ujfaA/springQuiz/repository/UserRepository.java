@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import ujfaA.springQuiz.dto.UserDTO;
 import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.model.User;
 
@@ -16,6 +17,10 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	public Boolean existsUserByUsername(String username);
 
 	public Optional<User> findByUsername(String username);
+	
+	@Query("SELECT NEW ujfaA.springQuiz.dto.UserDTO(u.username, u.email, u.firstName, u.lastName)"
+			+ " FROM User u")
+	public Set<UserDTO> getUsersInfo();
 	
 	public int countCorrectAnswers(String username);
 	

@@ -66,7 +66,8 @@ public class QuizAdministratorController {
 	}
 	
 	@GetMapping("/users")
-	public String getUsers() {
+	public String getUsersInfo(ModelMap model) {
+		model.addAttribute("users", userService.getUsersInfo());
 		return "usersInfo";
 	}
 	

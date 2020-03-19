@@ -9,11 +9,12 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@NamedNativeQuery(name = "User.countCorrectAnswers", 
-				query = "SELECT Count(correct_answer) "
-						+ " FROM users LEFT JOIN users_answers on users.user_id = users_answers.user_id"
-						+ " LEFT JOIN questions on users_answers.question_id = questions.question_id"
-						+ " WHERE username = :username AND answer = correct_answer")
+@NamedNativeQuery(
+name = "User.countCorrectAnswers",
+query = "SELECT Count(correct_answer) "
+	 + " FROM users LEFT JOIN users_answers on users.user_id = users_answers.user_id"
+	 + " LEFT JOIN questions on users_answers.question_id = questions.question_id"
+	 + " WHERE username = :username AND answer = correct_answer")
 
 @Entity
 @Table(name="users")
@@ -52,7 +53,6 @@ public class User {
 	@Column(name = "answer")
 	private Map<Question, String> answers = new HashMap<>();
 
-	
 	public void storeAnsweredQuestion(Question question, String answer) {
 		answers.put(question, answer);
 	}

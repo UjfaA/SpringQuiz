@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ujfaA.springQuiz.dto.UserDTO;
 import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.model.User;
 import ujfaA.springQuiz.repository.UserRepository;
@@ -40,8 +41,8 @@ public class UserService {
 		return userRepo.save(user);
 	}
 	
-	public Iterable<User> listAll() {
-		return userRepo.findAll();
+	public Set<UserDTO> getUsersInfo() {
+		return userRepo.getUsersInfo();
 	}
 	
 	public void deleteUser(User user) {
