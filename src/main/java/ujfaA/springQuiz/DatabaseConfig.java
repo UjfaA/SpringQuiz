@@ -18,7 +18,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+/*
 @Configuration
 @ComponentScan(basePackages = "ujfaA.springquiz")
 public class DatabaseConfig {
@@ -35,7 +35,7 @@ public class DatabaseConfig {
 		return new HikariDataSource(config);
 	}
 	
-	*/
+
 	
 
 	@Bean
@@ -55,3 +55,4 @@ public class DatabaseConfig {
 	}
 
 }
+*/
