@@ -11,7 +11,7 @@
 		th:replace="~{fragments/HeaderAndFooter :: header}">
 	</header>
 	<nav
-	 th:replace="~{fragments/Navigation :: navigation}" >
+	 th:replace="~{fragments/Navigation :: topBar}" >
 	 </nav>
 	 
 	 <div class="w3-container w3-center w3-padding-large">
@@ -20,8 +20,7 @@
 	 <div class="w3-container w3-center w3-padding-large">
 	 	<a th:href="@{/questions/new}" class="w3-btn w3-large w3-green"> Add new </a>
 	 </div>
-	 
-	 
+	
 	 <div class="w3-container">
 	 	<ul class="w3-ul w3-border w3-border-white w3-hover-border-green w3-section"
 	 		th:each="question : ${questions}">
