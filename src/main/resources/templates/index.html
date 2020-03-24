@@ -14,7 +14,7 @@
 	 th:replace="~{fragments/Navigation :: navigation}" >
 	 </nav>
 	<div class="w3-container w3-padding-large" align="center">
-		<h2 th:text = "${'Welcome ' + session.userFirstName}"> </h2>
+		<h2 th:text = "Welcome"> </h2>
 	</div>
 	<div class="w3-container w3-padding-large" align="center">
 		<a th:href="@{/quiz/start}" class="w3-btn w3-large w3-green">Start Quiz</a>
