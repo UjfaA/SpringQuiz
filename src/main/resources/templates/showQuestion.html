@@ -12,7 +12,7 @@
 		th:replace="~{fragments/HeaderAndFooter :: header}">
 	</header>
 	<nav
-	 	th:replace="~{fragments/Navigation :: navigation}" >
+	 	th:replace="~{fragments/Navigation :: topBar}" >
 	 </nav>
 	 <div class="w3-container w3-padding w3-center">
 	 	<h4 align="center" th:text="${'Question ' + (qIndex + 1)  + '/' + numberOfQuestions}"> Question</h4>

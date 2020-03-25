@@ -11,7 +11,7 @@
 		th:replace="~{fragments/HeaderAndFooter :: header}">
 	</header>
 	<nav
-	 th:replace="~{fragments/Navigation :: navigation}" >
+	 	th:replace="~{fragments/Navigation :: topBar}" >
 	 </nav>
 	<div class="w3-container w3-padding-large" align="center">
 		<h2 th:text = "${'Welcome ' + session.userFirstName}"> </h2>
@@ -19,10 +19,12 @@
 	<div class="w3-container w3-padding-large" align="center">
 		<a th:href="@{/quiz/start}" class="w3-btn w3-large w3-green">Start Quiz</a>
 	</div>
-	<!-- Admin tools navigation -->
+	 
+	<!-- Admin tools navigation
 	<nav 
 		th:replace="~{fragments/navigation :: adminTools}">
 	</nav>
+	-->
 	<footer
 		th:replace="~{fragments/HeaderAndFooter :: footer}">
 	</footer>
