@@ -19,6 +19,10 @@ public class Question{
 	@Column(name = "question_id")
 	private Long id;
 	
+	@ManyToOne(targetEntity = User.class, optional = false)
+	@JoinColumn(name="created_by_user", referencedColumnName = "user_id")
+	private User createdBy;
+	
 	@Column(unique = true, nullable = false)
 	private String questionText;
 	
@@ -31,7 +35,7 @@ public class Question{
 	private List<String> answers = new ArrayList<String>(); //contains correctAnswer
 
 	@Transient
-	private int selectedAnswerIndex;
+	private int selectedAnswerIndex;	//used in form when user adds question
 	
 	public Question() {
 	}

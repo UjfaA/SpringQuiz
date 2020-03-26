@@ -48,6 +48,8 @@ public class QuestionService {
 	
 	public Question save(Question q) {
 		
+		if (q.getCreatedBy() == null) throw new NullPointerException("Atribute createdBy can not be null.");
+		
 		List<String> ansList = q.getAnswers();
 		String correctAnswer = ansList.get(q.getSelectedAnswerIndex());  
 		q.setCorrectAnswer(correctAnswer);

@@ -33,4 +33,10 @@ public class QuizService {
 		questionService.delete(questionId);
 	}
 
+	public void add(Question question, String username) {
+		User user = userService.getUser(username);
+		question.setCreatedBy(user);
+		questionService.save(question);
+	}
+
 }

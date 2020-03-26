@@ -1,6 +1,8 @@
 package ujfaA.springQuiz.controller;
 
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -45,8 +47,9 @@ public class QuizAdministratorController {
 	
 	@PostMapping("/questions/new")
 	public String addQuestion(@ModelAttribute Question question,
-								@RequestParam int numberOfAnswers,
-								RedirectAttributes redirectAttrs) {
+							@RequestParam int numberOfAnswers,
+							Principal principal,
+							RedirectAttributes redirectAttrs) {
 		
 		boolean hasDuplicateAnswers = questionService.containsRepeatedAnswers(question);
 		if (hasDuplicateAnswers) {
@@ -55,7 +58,8 @@ public class QuizAdministratorController {
 			redirectAttrs.addFlashAttribute(question);
 			return"redirect:/questions/new";
 		}
-		questionService.save(question);
+		String createdBy = principal.getName();
+		quizService.add(question, createdBy);
 		return "redirect:/questions";
 	}
 	
