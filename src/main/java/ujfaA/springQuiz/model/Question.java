@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.Getter;
 import lombok.Setter;
 
 
-@Entity
+@Entity @EntityListeners(AuditingEntityListener.class)
 @Table(name="questions")
 @Getter @Setter
 public class Question{
@@ -18,6 +21,11 @@ public class Question{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "question_id")
 	private Long id;
+	
+	@CreatedBy
+	@ManyToOne(targetEntity = User.class, optional = false)
+	@JoinColumn(name="created_by_user", referencedColumnName = "user_id")
+	private User createdBy;
 	
 	@Column(unique = true, nullable = false)
 	private String questionText;
@@ -28,10 +36,10 @@ public class Question{
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question_id"))
 	@Column(name = "answer")
-	private List<String> answers = new ArrayList<String>(); //contains correctAnswer
+	private List<String> answers = new ArrayList<String>();	// Including the correctAnswer.
 
 	@Transient
-	private int selectedAnswerIndex;
+	private int selectedAnswerIndex;	// Used in a form when user create a question.
 	
 	public Question() {
 	}

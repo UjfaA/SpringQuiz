@@ -8,11 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import ujfaA.springQuiz.dto.UserDTO;
-import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.model.User;
 
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
-	
 	
 	public Boolean existsUserByUsername(String username);
 
@@ -26,13 +24,13 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	
 	@Query("SELECT u.username"
 			+ " FROM User u, IN(u.answers) ans"
-			+ " WHERE KEY(ans) = :question")
-	public Set<String> getUsernamesThatAnswered(Question question);
+			+ " WHERE KEY(ans).id = :questionId")
+	public Set<String> getUsernamesThatAnswered(long questionId);
 	
 	@Query("SELECT u.username"
 			+ " FROM User u, IN(u.answers) ans"
-			+ " WHERE KEY(ans) = :question AND ans = :answer")
-	public Set<String> getUsernamesThatAnsweredWith(Question question, String answer);
+			+ " WHERE KEY(ans).id = :questionId AND ans = :answer")
+	public Set<String> getUsernamesThatAnsweredWith(long questionId, String answer);
 	
 	@Query(nativeQuery = true,
 		value = "SELECT users.username"

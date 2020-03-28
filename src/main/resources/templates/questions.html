@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title> Spring Quiz - Administrator - Questions</title>
 </head>
 <body>
@@ -12,36 +13,38 @@
 	</header>
 	<nav
 	 th:replace="~{fragments/Navigation :: topBar}" >
-	 </nav>
-	 
-	 <div class="w3-container w3-center w3-padding-large">
-		<h2>Questions</h2>
+	</nav> 
+	<div class="w3-container w3-center w3-padding-large">
+		<h2 th:text="'Questions' + (${param.byMe}? ' added by me' : '')">Questions</h2>
 	</div>
-	 <div class="w3-container w3-center w3-padding-large">
+	<div class="w3-container w3-center w3-padding-large">
 	 	<a th:href="@{/questions/new}" class="w3-btn w3-large w3-green"> Add new </a>
-	 </div>
-	
-	 <div class="w3-container">
-	 	<ul class="w3-ul w3-border w3-border-white w3-hover-border-green w3-section"
-	 		th:each="question : ${questions}">
-  			<li class="w3-bar">
-  				<h5 class="w3-bar-item">
-  					<b th:text="${question.questionText}">Question text</b>
-  				</h5>
-  				<form th:action="@{questions/delete}" method="post">
-  					<input type="hidden" name="id" th:value="${question.id}">
-  					<input class="w3-bar-item w3-button w3-small w3-right"
-  						 type="submit" value="delete" />
-  				</form>
-  			</li>
- 			<li th:each="answer,iterStat : ${question.answers}">
- 				<span th:text="${iterStat.count +'. ' + answer}">Answer</span>
- 				
+	</div>
+	 
+	<div align="center">
+	<div class="w3-container w3-border w3-border-white w3-hover-border-green w3-section " align="justify" style="width:70%;"
+		th:each="question : ${questions}">
+		<div class="w3-bar">
+			<h5 class="w3-bar-item"> <b th:text="${question.questionText}">Question text</b></h5>
+  			<form class="w3-bar-item w3-right"
+  				th:if="${param.byMe}"
+  				th:action="@{questions/delete}" method="post">
+  				<input type="hidden" name="id" th:value="${question.id}">
+  				<input class="w3-button w3-small"
+  					 type="submit" value="delete" />
+  			</form>
+		</div>
+	 	<ul class="w3-ul">
+ 			<li class="w3-border-bottom"
+ 				th:each="answer,iterStat : ${question.answers}">
+ 				<span th:text="${iterStat.count +'. ' + answer + ' '}">Answer</span>
  				<span class="fa fa-check w3-large w3-green" 
  					th:if="${answer EQ question.correctAnswer}">
  				</span>
  			</li>
 		</ul>
+	 </div>
+	 
 	 </div>
 	 <footer
 		th:replace="~{fragments/HeaderAndFooter :: footer}">

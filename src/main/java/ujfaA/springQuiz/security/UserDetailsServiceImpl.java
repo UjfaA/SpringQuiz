@@ -18,13 +18,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepository userRepository;
 
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		ujfaA.springQuiz.model.User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+		ujfaA.springQuiz.model.User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
 		Set<GrantedAuthority> grantedAuthorities = Set.of( new SimpleGrantedAuthority("ROLE_" + user.getRole()) );
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
 	}
