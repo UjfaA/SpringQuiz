@@ -66,9 +66,15 @@ public class QuizController {
 	@PostMapping("/quiz/show")
 	public String userAnswered( Principal principal,
 								@RequestParam(name = "qId") long questionId,
-								@RequestParam String selectedAnswer,
-								@RequestParam(name = "q") int qIndex) {
-
+								@RequestParam(defaultValue = "") String selectedAnswer,
+								@RequestParam(name = "q") int qIndex,
+								RedirectAttributes redirectAttributes) {
+		
+		if (selectedAnswer.isBlank()) {
+			redirectAttributes.addFlashAttribute("message", "Please select an answer before clicking the submit button.");
+			return "redirect:/quiz/show?q=" + qIndex;
+		}
+		
 		String username = principal.getName();
 		quizService.storeUsersAnswer(username, questionId, selectedAnswer);
 
