@@ -1,7 +1,6 @@
 package ujfaA.springQuiz.controller;
 
 import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ujfaA.springQuiz.model.Question;
+import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.service.QuestionService;
 import ujfaA.springQuiz.service.QuizService;
 
@@ -18,16 +17,11 @@ import ujfaA.springQuiz.service.QuizService;
 public class QuizController {
 	
 	@Autowired
-	QuestionService questionService;
+	private QuestionService questionService;
 	@Autowired
-	QuizService quizService;
+	private QuizService quizService;
+	
 
-	
-	@GetMapping("/d")
-	public String debug() {
-		return "index";
-	}
-	
 	@GetMapping({ "/", "/home" })
 	public String home() {
 		return "index";
@@ -46,8 +40,7 @@ public class QuizController {
 				"Quiz does not have any questions. Administrator needs to add at least 1 question.");
 			return "redirect:/errpage";
 		}
-		
-// TODO	quizService.resetScore(principal.getName());
+		//TODO: reset user score
 		redirectAttr.addAttribute("q", 0);
 		return "redirect:/quiz/show";
 	}
@@ -59,12 +52,10 @@ public class QuizController {
 		
 		if (qIndex < numberOfQuestions) {			
 			
-			Question question = questionService.getQuestionByIndex(qIndex);
+			QuestionDTO question = questionService.getQuestionByIndex(qIndex);			
+			model.addAttribute("question", question);
 			model.addAttribute("qIndex", qIndex);
 			model.addAttribute("numberOfQuestions", numberOfQuestions);
-			model.addAttribute("questionText", question.getQuestionText());
-			model.addAttribute("questionId", question.getId());
-			model.addAttribute("answers", question.getAnswers());
 			return "showQuestion";
 		}
 		else {
@@ -74,9 +65,9 @@ public class QuizController {
 	
 	@PostMapping("/quiz/show")
 	public String userAnswered( Principal principal,
-								@RequestParam Long questionId,
+								@RequestParam(name = "qId") long questionId,
 								@RequestParam String selectedAnswer,
-								@RequestParam int qIndex) {
+								@RequestParam(name = "q") int qIndex) {
 
 		String username = principal.getName();
 		quizService.storeUsersAnswer(username, questionId, selectedAnswer);

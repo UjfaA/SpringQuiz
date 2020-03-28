@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.dto.UserDTO;
-import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.model.User;
 import ujfaA.springQuiz.repository.UserRepository;
 
@@ -49,11 +49,11 @@ public class UserService {
 		userRepo.delete(user);
 	}
 
-	public Set<String> getUsernamesThatAnswered(Question q, boolean correctly ) {
+	public Set<String> getUsernamesThatAnswered(QuestionDTO q, boolean correctly ) {
 		if (correctly)
-			return userRepo.getUsernamesThatAnsweredWith(q, q.getCorrectAnswer());
+			return userRepo.getUsernamesThatAnsweredWith(q.getId(), q.getCorrectAnswer());
 		else
-			return userRepo.getUsernamesThatAnswered(q);
+			return userRepo.getUsernamesThatAnswered(q.getId());
 	}
 
 	public Set<String> getUsernamesThatAnsweredEveryQ(boolean correctly) {

@@ -19,14 +19,13 @@
 	 	<div align="center">
 			<form class="w3-container w3-card w3-center w3-light-grey" style="width:80%;"
 				th:action="@{/quiz/show}" method="post">
-				
-				<input type="hidden" name="questionId" th:value="${questionId}">
-				<input type="hidden" name="qIndex" th:value="${qIndex}">
+				<input type="hidden" name="qId" th:value="${question.id}"/>
+				<input type="hidden" name="q" th:value="${qIndex}"/>
 				<p align="left">
-					<b th:text="${'&emsp;' + questionText}">Question Text</b>
+					<b th:text="${'&emsp;' + question.questionText}">Question Text</b>
 				 </p>
 				 <p align="left"
-				 	th:each="answer,loop : ${answers}">
+				 	th:each="answer,loop : ${question.answers}">
   					<input class="w3-radio" 
   						type="radio" 
   						th:name="selectedAnswer" th:value="${answer}"

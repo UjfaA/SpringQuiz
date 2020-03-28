@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.service.QuestionService;
 import ujfaA.springQuiz.service.QuizService;
@@ -21,17 +22,25 @@ import ujfaA.springQuiz.service.UserService;
 public class QuizAdministratorController {
 		
 	@Autowired
-	QuestionService questionService;
+	private QuestionService questionService;
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	QuizService quizService;
+	private QuizService quizService;
 	
 	@GetMapping("/questions")
-	public String getQuestions(ModelMap model) {
-		model.addAttribute("questions", questionService.listAll());
+	public String getQuestions(@RequestParam(name = "byMe", defaultValue = "false") boolean createdByCurrentUser,
+								Principal principal, ModelMap model) {
+		
+		if (createdByCurrentUser) {
+			String currentUsername = principal.getName();
+			model.addAttribute("questions", questionService.listAllByUser(currentUsername));			
+		}
+		else {
+			model.addAttribute("questions", questionService.listAll());			
+		}
 		return "questions";
 	}
 	
@@ -48,7 +57,6 @@ public class QuizAdministratorController {
 	@PostMapping("/questions/new")
 	public String addQuestion(@ModelAttribute Question question,
 							@RequestParam int numberOfAnswers,
-							Principal principal,
 							RedirectAttributes redirectAttrs) {
 		
 		boolean hasDuplicateAnswers = questionService.containsRepeatedAnswers(question);
@@ -58,8 +66,14 @@ public class QuizAdministratorController {
 			redirectAttrs.addFlashAttribute(question);
 			return"redirect:/questions/new";
 		}
-		String createdBy = principal.getName();
-		quizService.add(question, createdBy);
+		try {
+			questionService.save(question);			
+		} catch (Exception e) {
+			redirectAttrs.addAttribute("numberOfAnswers", question.getAnswers().size());			
+			redirectAttrs.addFlashAttribute("message", "There was an error while adding the question.");
+			redirectAttrs.addFlashAttribute(question);
+			return"redirect:/questions/new";
+		}
 		return "redirect:/questions";
 	}
 	
@@ -80,7 +94,7 @@ public class QuizAdministratorController {
 									@RequestParam(name = "correctly", defaultValue = "false") boolean correctly,
 									ModelMap model) {
 
-		model.addAttribute("texts", questionService.GetQuestionsText());
+		model.addAttribute("texts", questionService.GetQuestionTexts());
 		model.addAttribute("selectedIndex", qIndex);
 		model.addAttribute("checked", correctly);
 		
@@ -88,10 +102,9 @@ public class QuizAdministratorController {
 			model.addAttribute("usernames", userService.getUsernamesThatAnsweredEveryQ(correctly));
 		}
 		else {
-			Question q = questionService.getQuestionByIndex(qIndex);
+			QuestionDTO q = questionService.getQuestionByIndex(qIndex);
 			model.addAttribute("usernames", userService.getUsernamesThatAnswered(q, correctly));
 		}
 		return"usersEngagement";
-	}
-	
+	}	
 }

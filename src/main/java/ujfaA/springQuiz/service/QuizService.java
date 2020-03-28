@@ -16,7 +16,7 @@ public class QuizService {
 	@Autowired
 	private UserService userService;
 	
-	public void storeUsersAnswer(String username, Long questionId, String answer) {
+	public void storeUsersAnswer(String username, long questionId, String answer) {
 		
 		Question question = questionService.getQuestionById(questionId);
 		User user = userService.getUser(username);
@@ -32,11 +32,4 @@ public class QuizService {
 		userService.removeFromUsersAnswers(questionId);
 		questionService.delete(questionId);
 	}
-
-	public void add(Question question, String username) {
-		User user = userService.getUser(username);
-		question.setCreatedBy(user);
-		questionService.save(question);
-	}
-
 }

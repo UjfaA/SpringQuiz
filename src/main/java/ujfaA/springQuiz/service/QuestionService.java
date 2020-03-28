@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.model.Question;
 import ujfaA.springQuiz.repository.QuestionRepository;
 
@@ -20,9 +21,14 @@ public class QuestionService {
 	
 	@Autowired
 	private QuestionRepository questionRepo;
+
 	
-	public Iterable<Question> listAll() {
-		return questionRepo.findAll();
+	public Set<QuestionDTO> listAll() {
+		return questionRepo.findBy();
+	}
+	
+	public Set<QuestionDTO> listAllByUser(String username) {
+		return questionRepo.findByCreatedByUsername(username);
 	}
 	
 	public int getNumberOfQuestions() {
@@ -33,27 +39,24 @@ public class QuestionService {
 		return questionRepo.findById(id).orElseThrow();
 	}
 	
-	public Question getQuestionByQuestionText(String questionText) {
+	public QuestionDTO getQuestionByQuestionText(String questionText) {
 		return questionRepo.findByQuestionText(questionText);
 	}
 		
-	public Question getQuestionByIndex(int qIndex) {
+	public QuestionDTO getQuestionByIndex(int qIndex) {
 		
 		Pageable pageRequest = PageRequest.of(qIndex, 1);
-		Page<Question> page = questionRepo.findByOrderById(pageRequest);
+		Page<QuestionDTO> page = questionRepo.findByOrderById(pageRequest);
 		if ( ! page.hasContent())
 			throw new IndexOutOfBoundsException();
 		return page.getContent().get(0);
 	}
 	
 	public Question save(Question q) {
-		
-		if (q.getCreatedBy() == null) throw new NullPointerException("Atribute createdBy can not be null.");
-		
-		List<String> ansList = q.getAnswers();
-		String correctAnswer = ansList.get(q.getSelectedAnswerIndex());  
-		q.setCorrectAnswer(correctAnswer);
 
+		List<String> ans = q.getAnswers();
+		int markedAsCorrect = q.getSelectedAnswerIndex();  
+		q.setCorrectAnswer(ans.get(markedAsCorrect));
 		return questionRepo.save(q);
 	}
 	
@@ -61,7 +64,7 @@ public class QuestionService {
 		questionRepo.deleteById(id);
 	}
 	
-	public List<String> GetQuestionsText() {
+	public List<String> GetQuestionTexts() {
 		return questionRepo.findAllQuestionTexts();
 	}
 
@@ -69,5 +72,4 @@ public class QuestionService {
 		Set<String> set = new HashSet<String>(question.getAnswers());
 		return set.size() != question.getAnswers().size();
 	}
-
 }
