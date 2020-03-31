@@ -64,16 +64,7 @@ public class QuizAdministratorController {
 			model.addAttribute("numberOfAnswers", question.getAnswers().size());
 			model.addAttribute("MAX_ANSWERS", 5);
 			return "newQuestion";
-		}
-/*		
-		boolean hasDuplicateAnswers = questionService.containsRepeatedAnswers(question);
-		if (hasDuplicateAnswers) {
-			model.addAttribute("numberOfAnswers", question.getAnswers().size());			
-			model.addAttribute("MAX_ANSWERS", 5);
-			model.addAttribute("message", "Each answer has to be different.");
-			return "newQuestion";
-		}
-*/		
+		}	
 		try {
 			questionService.save(question);			
 		} catch (Exception e) {
