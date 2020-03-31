@@ -1,6 +1,5 @@
 package ujfaA.springQuiz.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,10 +65,5 @@ public class QuestionService {
 	
 	public List<String> GetQuestionTexts() {
 		return questionRepo.findAllQuestionTexts();
-	}
-
-	public boolean containsRepeatedAnswers(Question question) {
-		Set<String> set = new HashSet<String>(question.getAnswers());
-		return set.size() != question.getAnswers().size();
 	}
 }
