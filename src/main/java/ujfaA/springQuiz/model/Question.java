@@ -44,7 +44,7 @@ public class Question{
 	@UniqueElements(message = "Each answer has to be different.")
 	//
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question", referencedColumnName = "question_id"))
+	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "question_id"))
 	@OrderColumn(name = "ordinal", columnDefinition = "tinyint") 
 	@Column(name = "answer", nullable = false)
 	private List<@NotBlank String> answers = new ArrayList<String>();	// Including the correctAnswer.
