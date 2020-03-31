@@ -30,37 +30,43 @@
 	 <div class="w3-panel" align="center">
 		<form class="w3-container w3-card w3-light-grey" style="width:80%;"
 			action="#" th:action="@{/questions/new}" th:object="${question}" method="post">
-				
-				<input type="hidden" name="numberOfAnswers" th:value="${numberOfAnswers}" />
-				
 				<p align="left">
-				<label th:for="questionText">Question:</label>
-				<input class="w3-input w3-border"
-					th:field="*{questionText}" autofocus />
+					<label th:for="questionText">Question:</label>
+					<label class="w3-text-red"
+						th:errors="*{questionText}"> QuestionText error </label>
+					<input class="w3-input w3-border"
+						type="text" th:field="*{questionText}" 
+						required autofocus />
 				</p>
 				<div class="w3-quarter w3-right" align="center">
 					<label th:text="'Correct answer:'"> Correct answer </label>
 				</div>
 				
-				<div th:each="n : ${#numbers.sequence(1, numberOfAnswers)}">
+				<div th:each="ansCount : ${#numbers.sequence(1, numberOfAnswers)}">
 					<div align="left">
 						<label th:for="${#ids.next('answers')}" 
-							th:text="${'Answer ' + n + ':'}">Answer:
+							th:text="${'Answer ' + ansCount + ':'}">Answer:
 						</label>
+					<!-- Using expression pre-processing, so that "index" variable is resolved before (at a "first pass")
+						 and the Spring EL engine receives a numeric literal when it executes the whole expression: answers[index]
+						 http://forum.thymeleaf.org/How-to-render-Spring-fields-in-a-loop-tp4025542p4025556.html-->
+						<label class="w3-text-red" 
+							th:errors="*{answers[__${ansCountStat.index}__]}"> Answer error </label>
 					</div>
  					<div class="w3-row">
     					<div class="w3-threequarter">
-							<input class=" w3-input w3-border"
-									name="answers" th:value="${ n <= #lists.size(question.answers) ? question.answers[n-1] : ''}"  
-						 			th:id="${#ids.seq('answers')}" />
+							<input class=" w3-input w3-border" 
+								type="text" name="answers" th:value="${ ansCount <= #lists.size(question.answers) ? question.answers[ansCountStat.index] : ''}"  
+						 		th:id="${#ids.seq('answers')}"
+						 		required />
     					</div>
     					<div class="w3-quarter">
 							<input class="w3-radio"
-								type="radio" th:field="*{selectedAnswerIndex}" th:value="${n-1}"/>
+								type="radio" th:field="*{selectedAnswerIndex}" th:value="${ansCountStat.index}"/>
     					</div>
   					</div>
 				</div>
-	
+				<label class="w3-text-red" th:errors="*{answers}"> Answers error </label>
 				<p>
 					<input class="w3-btn w3-block w3-green w3-m"
 					type="submit" value="Add question" />

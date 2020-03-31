@@ -3,9 +3,12 @@ package ujfaA.springQuiz.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,17 +58,22 @@ public class QuizAdministratorController {
 	}
 	
 	@PostMapping("/questions/new")
-	public String addQuestion(@ModelAttribute Question question,
-							@RequestParam int numberOfAnswers,
-							RedirectAttributes redirectAttrs) {
+	public String addQuestion(@Valid Question question, BindingResult bindingResult, ModelMap model, RedirectAttributes redirectAttrs) {
 		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("numberOfAnswers", question.getAnswers().size());
+			model.addAttribute("MAX_ANSWERS", 5);
+			return "newQuestion";
+		}
+/*		
 		boolean hasDuplicateAnswers = questionService.containsRepeatedAnswers(question);
 		if (hasDuplicateAnswers) {
-			redirectAttrs.addAttribute("numberOfAnswers", question.getAnswers().size());			
-			redirectAttrs.addFlashAttribute("message", "Each answer has to be different.");
-			redirectAttrs.addFlashAttribute(question);
-			return"redirect:/questions/new";
+			model.addAttribute("numberOfAnswers", question.getAnswers().size());			
+			model.addAttribute("MAX_ANSWERS", 5);
+			model.addAttribute("message", "Each answer has to be different.");
+			return "newQuestion";
 		}
+*/		
 		try {
 			questionService.save(question);			
 		} catch (Exception e) {
