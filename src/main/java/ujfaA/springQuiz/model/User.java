@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,12 +28,15 @@ public class User {
 	@Column(name = "user_id")
 	private Long id;
 	
+	@NotBlank
 	@Column(unique = true, nullable = false)
 	private String username;
 	
+	@NotBlank
 	@Column(nullable = false)
 	private String password;
 	
+	@Email
 	@Column(unique = true, nullable = false)
 	private String email;
 	
@@ -41,8 +46,9 @@ public class User {
 
 	private LocalDateTime lastActive;
 	
-	@Column(nullable = false)
-	private String role;
+	@Convert(converter = RoleConventer.class)
+	@Column(length = 4, nullable = false)
+	private Role role;
 	
 	@Transient
 	private boolean isAdministrator;

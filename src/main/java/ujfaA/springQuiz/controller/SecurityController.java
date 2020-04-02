@@ -44,7 +44,7 @@ public class SecurityController {
 		}
 		else {
 			model.addAttribute("user", newUser);
-			model.addAttribute("message", "The username isn't available.\nPlease pick a one that's not taken.");
+			model.addAttribute("message", "The username isn't available.\nPlease pick another one.");
 			return "registration";
 		}
 	}

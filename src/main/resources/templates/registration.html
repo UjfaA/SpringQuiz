@@ -43,9 +43,17 @@
 					type="password" th:field="*{password}" required />
 				</p>
 				<p align="left">
+				<label th:for="role">Account type:</label>
+				<select class="w3-select w3-border"
+					th:field="*{role}">
+					<option th:each="r : ${T(ujfaA.springQuiz.model.Role).values()}" class="w3-border-white w3-hover-border-green"
+        				th:value="${r}" th:text="${r.displayValue}"></option>
+				</select>
+				<!-- 
 				<label th:for="${#ids.next('Administrator')}">Administrator:</label>
 				<input class="w3-check"
 					type="checkbox" th:field="*{Administrator}"/>
+				 -->
 				</p>
 				<p>
 					<input class="w3-btn w3-block w3-green w3-m"
