@@ -27,7 +27,7 @@
 		<div class="w3-bar">
 			<h5 class="w3-bar-item"> <b th:text="${question.questionText}">Question text</b></h5>
   			<form class="w3-bar-item w3-right"
-  				th:if="${param.byMe}"
+  				sec:authorize = "hasRole('CONTRIBUTOR')"
   				th:action="@{questions/delete}" method="post">
   				<input type="hidden" name="id" th:value="${question.id}">
   				<input class="w3-button w3-small"

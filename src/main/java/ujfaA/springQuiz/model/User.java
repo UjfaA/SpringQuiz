@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
+import ujfaA.springQuiz.model.validator.ValidName;
+import ujfaA.springQuiz.model.validator.ValidPassword;
 
 @NamedNativeQuery(
 name = "User.countCorrectAnswers",
@@ -29,19 +31,23 @@ public class User {
 	private Long id;
 	
 	@NotBlank
+	@ValidName
 	@Column(unique = true, nullable = false)
 	private String username;
 	
-	@NotBlank
+	@ValidPassword
 	@Column(nullable = false)
 	private String password;
 	
+	@NotBlank
 	@Email
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	@ValidName
 	private String firstName;
 	
+	@ValidName
 	private String lastName;	
 
 	private LocalDateTime lastActive;

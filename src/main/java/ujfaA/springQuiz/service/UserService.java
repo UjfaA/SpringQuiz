@@ -26,6 +26,10 @@ public class UserService {
 		return ( ! userRepo.existsUserByUsername(username));
 	}
 	
+	public boolean emailIsAvaible(String email) {
+		return ( ! userRepo.existsUserByEmail(email));
+	}
+	
 	public User getUser(String username) {
 		return userRepo.findByUsername(username).orElseThrow();
 	}
