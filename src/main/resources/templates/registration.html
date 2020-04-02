@@ -21,26 +21,35 @@
 				<label th:for="firstName">First Name:</label>
 				<input class="w3-input w3-border"
 					th:field="*{firstName}" autofocus />
+				<label class="w3-text-red"
+						th:errors="*{firstName}"> input error </label>
 				</p>
 				<p align="left">
 				<label th:for="lastName">Last Name:</label>
-				<input class="w3-input w3-border" 
+				<input class="w3-input w3-border"
 					th:field="*{lastName}" />
+				<label class="w3-text-red"
+						th:errors="*{lastName}"> input error </label>
 				</p>
-				<p align="left">
-				<label th:for="email">Email:</label>
+				<p class="w3-tooltip" align="left">
+				<label th:for="email">Email: *</label>
+				<span class="w3-text w3-tag w3-animate-opacity"> As this is demo app, any email in the correct format is OK.</span>
 				<input class="w3-input w3-border" 
-					type="email" th:field="*{email}" />
+					type="email" th:field="*{email}" required />
 				</p>
 				<p align="left">
-				<label th:for="username">Username:</label>
+				<label th:for="username">Username: *</label>
 				<input class="w3-input w3-border" 
 					th:field="*{username}" required />
+				<label class="w3-text-red"
+						th:errors="*{username}"> username error </label>
 				</p>
 				<p align="left">
-				<label th:for="password">Password:</label>
+				<label th:for="password">Password: *</label>
 				<input class="w3-input w3-border" 
 					type="password" th:field="*{password}" required />
+				<label class="w3-text-red"
+						th:errors="*{password}"> password error </label>
 				</p>
 				<p align="left">
 				<label th:for="role">Account type:</label>
@@ -49,11 +58,6 @@
 					<option th:each="r : ${T(ujfaA.springQuiz.model.Role).values()}" class="w3-border-white w3-hover-border-green"
         				th:value="${r}" th:text="${r.displayValue}"></option>
 				</select>
-				<!-- 
-				<label th:for="${#ids.next('Administrator')}">Administrator:</label>
-				<input class="w3-check"
-					type="checkbox" th:field="*{Administrator}"/>
-				 -->
 				</p>
 				<p>
 					<input class="w3-btn w3-block w3-green w3-m"
