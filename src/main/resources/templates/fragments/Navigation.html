@@ -28,9 +28,9 @@
        			<div class="w3-dropdown-content w3-bar-block w3-light-grey" style="padding-top: 8px;">
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
        					sec:authorize = "hasRole('MODERATOR')"
-       					th:href = "@{/questions}">See all</a>
+       					th:href = "@{/questions}">Show all</a>
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
-       					th:href = "@{/questions/byMe}">See added by me</a>
+       					th:href = "@{/questions/byMe}">Show added by me</a>
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
        					th:href = "@{/questions/new}">Add new</a>
        			</div>

@@ -14,58 +14,78 @@
 	 </nav>
 	<div class="w3-panel" align="center">
 		<h4 align="center">Register new account</h4>
-		<form class="w3-container w3-card  w3-light-grey" style="width:50%;"
-			action="#" th:action="@{/registration}" th:object="${user}" method="post">
-				
-				<p align="left">
-				<label th:for="firstName">First Name:</label>
-				<input class="w3-input w3-border"
-					th:field="*{firstName}" autofocus />
-				</p>
-				<p align="left">
-				<label th:for="lastName">Last Name:</label>
-				<input class="w3-input w3-border" 
-					th:field="*{lastName}" />
-				</p>
-				<p align="left">
-				<label th:for="email">Email:</label>
-				<input class="w3-input w3-border" 
-					type="email" th:field="*{email}" />
-				</p>
-				<p align="left">
-				<label th:for="username">Username:</label>
-				<input class="w3-input w3-border" 
-					th:field="*{username}" required />
-				</p>
-				<p align="left">
-				<label th:for="password">Password:</label>
-				<input class="w3-input w3-border" 
-					type="password" th:field="*{password}" required />
-				</p>
-				<p align="left">
-				<label th:for="role">Account type:</label>
-				<select class="w3-select w3-border"
-					th:field="*{role}">
-					<option th:each="r : ${T(ujfaA.springQuiz.model.Role).values()}" class="w3-border-white w3-hover-border-green"
-        				th:value="${r}" th:text="${r.displayValue}"></option>
+		<form class="w3-container w3-card  w3-light-grey" style="width: 50%;"
+			action="#" th:action="@{/registration}" th:object="${user}"
+			method="post">
+
+			<p align="left">
+				<label th:for="firstName">First Name:</label> <input
+					class="w3-input w3-border" th:field="*{firstName}" autofocus />
+			</p>
+			<p align="left">
+				<label th:for="lastName">Last Name:</label> <input
+					class="w3-input w3-border" th:field="*{lastName}" />
+			</p>
+			<p align="left">
+				<label th:for="email">Email:</label> <input
+					class="w3-input w3-border" type="email" th:field="*{email}" />
+			</p>
+			<p align="left">
+				<label th:for="username">Username:</label> <input
+					class="w3-input w3-border" th:field="*{username}" required />
+			</p>
+			<p align="left">
+				<label th:for="password">Password:</label> <input
+					class="w3-input w3-border" type="password" th:field="*{password}"
+					required />
+			</p>
+			<p align="left">
+				<span class="w3-button w3-hover-none w3-text-grey w3-right w3-small"
+					style="margin-bottom: 8px;"
+					onclick="document.getElementById('id01').style.display='block'">More
+					about the account types</span> <label th:for="role">Account type:
+				</label> <select class="w3-select w3-border" th:field="*{role}">
+					<option th:each="r : ${T(ujfaA.springQuiz.model.Role).values()}"
+						class="w3-border-white w3-hover-border-green" th:value="${r}"
+						th:text="${r.displayValue}"></option>
 				</select>
 				<!-- 
 				<label th:for="${#ids.next('Administrator')}">Administrator:</label>
 				<input class="w3-check"
 					type="checkbox" th:field="*{Administrator}"/>
 				 -->
-				</p>
-				<p>
-					<input class="w3-btn w3-block w3-green w3-m"
-					type="submit" value="Register" />
-				</p>
+			</p>
+			<p>
+				<input class="w3-btn w3-block w3-green w3-m" type="submit"
+					value="Register" />
+			</p>
 		</form>
 	</div>
+	
+	<!-- modal -->
+	<div id="id01" class="w3-modal">
+		<div class="w3-modal-content">
+			<header class="w3-container w3-green">
+				<span onclick="document.getElementById('id01').style.display='none'"
+					class="w3-button w3-display-topright">&times;</span>
+				<h3>Account types:</h3>
+			</header>
+			<div class="w3-container">
+				<p>With <b>Basic</b> account you will be able to take part in the quiz - answer questions and see a score at the end.</p>
+				<p>With <b>Contributor's</b> account you will be able to add take part in the quiz, but also to add and remove questions that you added.</p>
+				<p>With <b>Moderator's</b> account in addition to the above, you will be able to see and delete questions added by anyone. You will also have access to some stats about the quiz.</p>
+				<p>With <b>Administrator's</b> account you will have full access.</p>
+			</div>
+			<footer class="w3-container w3-green w3-center">
+				<span onclick="document.getElementById('id01').style.display='none'"
+					class="w3-button w3-hover-none w3-text-white" style="text-decoration: underline;">close</span>
+			</footer>
+		</div>
+	</div>
+	
 	<div align="center">
 		<p th:text="${message}"></p>
 	</div>
-	<footer
-		th:replace="~{fragments/HeaderAndFooter :: footer}">
-	</footer>
+	<footer th:replace="~{fragments/HeaderAndFooter :: footer}"> </footer>
 </body>
 </html>

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.dto.UserDTO;
-import ujfaA.springQuiz.model.Role;
 import ujfaA.springQuiz.model.User;
 import ujfaA.springQuiz.repository.UserRepository;
 
@@ -33,8 +32,6 @@ public class UserService {
 	
 	public User register(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setRole(user.isAdministrator()	? Role.ADMINISTRATOR
-											: Role.USER);
 		return userRepo.save(user);
 	}
 	

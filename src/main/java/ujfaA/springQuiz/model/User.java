@@ -49,9 +49,6 @@ public class User {
 	@Convert(converter = RoleConventer.class)
 	@Column(length = 4, nullable = false)
 	private Role role;
-	
-	@Transient
-	private boolean isAdministrator;
 
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "users_answers", joinColumns = @JoinColumn(name = "user_id"))
@@ -59,20 +56,11 @@ public class User {
 	@Column(name = "answer")
 	private Map<Question, String> answers = new HashMap<>();
 
+	
 	public void storeAnsweredQuestion(Question question, String answer) {
 		answers.put(question, answer);
 	}
-	
-	// for Spring
-	public boolean getAdministrator() {
-		return isAdministrator;
-	}
-	
-	// for readability
-	public boolean isAdministrator() {
-		return isAdministrator;
-	}
-	
+
 	@Override
 	public String toString() {
 		return username;
