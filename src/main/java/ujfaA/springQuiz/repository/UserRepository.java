@@ -13,6 +13,8 @@ import ujfaA.springQuiz.model.User;
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	
 	public Boolean existsUserByUsername(String username);
+	
+	public boolean existsUserByEmail(String email);
 
 	public Optional<User> findByUsername(String username);
 	
@@ -57,4 +59,5 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	@Query(nativeQuery = true,
 		value = "DELETE FROM users_answers WHERE question_id = ?1")
 	public void removeFromUsersAnswers(long questionId);
+
 }

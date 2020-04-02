@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
+import ujfaA.springQuiz.model.validator.ValidName;
+import ujfaA.springQuiz.model.validator.ValidPassword;
 
 @NamedNativeQuery(
 name = "User.countCorrectAnswers",
@@ -26,26 +30,31 @@ public class User {
 	@Column(name = "user_id")
 	private Long id;
 	
+	@NotBlank
+	@ValidName
 	@Column(unique = true, nullable = false)
 	private String username;
 	
+	@ValidPassword
 	@Column(nullable = false)
 	private String password;
 	
+	@NotBlank
+	@Email
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	@ValidName
 	private String firstName;
 	
+	@ValidName
 	private String lastName;	
 
 	private LocalDateTime lastActive;
 	
-	@Column(nullable = false)
-	private String role;
-	
-	@Transient
-	private boolean isAdministrator;
+	@Convert(converter = RoleConventer.class)
+	@Column(length = 4, nullable = false)
+	private Role role;
 
 	@ElementCollection(fetch = FetchType.LAZY)
 	@CollectionTable(name = "users_answers", joinColumns = @JoinColumn(name = "user_id"))
@@ -53,20 +62,11 @@ public class User {
 	@Column(name = "answer")
 	private Map<Question, String> answers = new HashMap<>();
 
+	
 	public void storeAnsweredQuestion(Question question, String answer) {
 		answers.put(question, answer);
 	}
-	
-	// for Spring
-	public boolean getAdministrator() {
-		return isAdministrator;
-	}
-	
-	// for readability
-	public boolean isAdministrator() {
-		return isAdministrator;
-	}
-	
+
 	@Override
 	public String toString() {
 		return username;

@@ -34,16 +34,15 @@ public class QuizAdministratorController {
 	private QuizService quizService;
 	
 	@GetMapping("/questions")
-	public String getQuestions(@RequestParam(name = "byMe", defaultValue = "false") boolean createdByCurrentUser,
-								Principal principal, ModelMap model) {
-		
-		if (createdByCurrentUser) {
-			String currentUsername = principal.getName();
-			model.addAttribute("questions", questionService.listAllByUser(currentUsername));			
-		}
-		else {
-			model.addAttribute("questions", questionService.listAll());			
-		}
+	public String getQuestions(ModelMap model) {		
+		model.addAttribute("questions", questionService.listAll());
+		return "questions";
+	}
+	
+	@GetMapping("/questions/byMe")
+	public String getQuestionsByUser(Principal principal, ModelMap model) {
+		String currentUsername = principal.getName();
+		model.addAttribute("questions", questionService.listAllByUser(currentUsername));
 		return "questions";
 	}
 	
@@ -73,7 +72,7 @@ public class QuizAdministratorController {
 			redirectAttrs.addFlashAttribute(question);
 			return"redirect:/questions/new";
 		}
-		return "redirect:/questions";
+		return "redirect:/questions/byMe";
 	}
 	
 	@PostMapping("/questions/delete")

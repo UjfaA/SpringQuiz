@@ -12,33 +12,37 @@
 		<div class="w3-bar w3-light-grey ">
     		<a th:href = "@{/home}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">Home</a>
        		<div class = "w3-dropdown-hover" 
-       			sec:authorize = "hasRole('ROLE_ADMIN')">
+       			sec:authorize = "hasRole('MODERATOR')">
        			<div class="w3-text-grey" style="padding-top: 8px; padding-left: 8px; padding-right: 8px;"> Users &#9660;</div>
        			<div class="w3-dropdown-content w3-bar-block w3-light-grey" style="padding-top: 8px;">
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
+       					sec:authorize = "hasRole('ADMINISTRATOR')"
        					th:href = "@{/users}">Overview</a>	
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
        					th:href = "@{/users/usersEng}">Engagement</a>
        			</div>
        		</div>
-       		<div class = "w3-dropdown-hover" 
-       			sec:authorize = "hasRole('ROLE_ADMIN')">
+       		<div class = "w3-dropdown-hover"
+       			sec:authorize = "hasRole('CONTRIBUTOR')">
        			<div class="w3-text-grey" style="padding-top: 8px; padding-left: 16px; padding-right: 8px;"> Questions &#9660;</div>
        			<div class="w3-dropdown-content w3-bar-block w3-light-grey" style="padding-top: 8px;">
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
-       					th:href = "@{/questions}">See all</a>
+       					sec:authorize = "hasRole('MODERATOR')"
+       					th:href = "@{/questions}">Show all</a>
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
-       					th:href = "@{/questions?byMe=true}">See added by me</a>
+       					th:href = "@{/questions/byMe}">Show added by me</a>
        				<a class="w3-bar-item w3-button w3-hover-none w3-text-grey"
        					th:href = "@{/questions/new}">Add new</a>
        			</div>
        		</div>
        		<a th:href = "@{/about}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black">About</a>
        		
-			<div sec:authorize="isAuthenticated()">
-				<a th:href="@{/logout}" class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-hover-text-black w3-right"> log out </a>
-       			<div align="center" class="w3-bar-item w3-hover-none w3-text-grey w3-right">
-       				 username: <span sec:authentication ="name"></span> 
+			<div class = "w3-right w3-dropdown-hover"
+				sec:authorize="isAuthenticated()">
+				<div class="w3-text-grey" style="padding-top: 8px; padding-right: 16px;"> Logged in as: <span sec:authentication ="name"></span> &#9660;</div>
+				<div class="w3-dropdown-content w3-bar-block w3-light-grey" style="padding-top: 6px;">
+					<a class="w3-bar-item w3-button w3-hover-none w3-text-grey w3-center"
+					th:href="@{/logout}"> log out </a>
        			</div>
        		</div>
 		</div>
@@ -46,7 +50,7 @@
 	
 	<!-- admin tools navigation buttons -->
 	<nav th:fragment="adminTools"
-		sec:authorize="hasRole('ROLE_ADMIN')">
+		sec:authorize="hasRole('ADMINISTRATOR')">
 		<div class="w3-center w3-padding-64">
 			<a th:href="@{/users}" class="w3-btn w3-small w3-green"> Users </a>
 			<a th:href="@{/questions}" class="w3-btn w3-small w3-green w3-margin-right"> Questions </a>
