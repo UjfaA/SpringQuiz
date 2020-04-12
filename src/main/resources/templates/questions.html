@@ -21,6 +21,10 @@
 	 	<a th:href="@{/questions/new}" class="w3-btn w3-large w3-green"> Add new </a>
 	</div>
 	 
+	 <div align="center">
+		<p th:text="${message}"></p>
+	</div>
+	 
 	<div align="center">
 	<div class="w3-container w3-border w3-border-white w3-hover-border-green w3-section " align="justify" style="width:70%;"
 		th:each="question : ${questions}">
@@ -28,8 +32,9 @@
 			<h5 class="w3-bar-item"> <b th:text="${question.questionText}">Question text</b></h5>
   			<form class="w3-bar-item w3-right"
   				sec:authorize = "hasRole('CONTRIBUTOR')"
-  				th:action="@{questions/delete}" method="post">
-  				<input type="hidden" name="id" th:value="${question.id}">
+  				th:action="@{/questions/delete}" method="post">
+  				<input type="hidden" name="id" th:value="${question.id}"/>
+  				<input type="hidden" name="createdBy" th:value="${question.createdBy.username}"/>
   				<input class="w3-button w3-small"
   					 type="submit" value="delete" />
   			</form>

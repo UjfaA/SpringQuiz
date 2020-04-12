@@ -1,6 +1,7 @@
 package ujfaA.springQuiz.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +35,7 @@ public class Question{
 	/* validation */
 	@NotBlank
 	//
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String questionText;
 	
 	@Column(nullable = false)
@@ -47,10 +49,20 @@ public class Question{
 	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "question_id"))
 	@OrderColumn(name = "ordinal", columnDefinition = "tinyint") 
 	@Column(name = "answer", nullable = false)
-	private List<@NotBlank String> answers = new ArrayList<String>();	// Including the correctAnswer.
+	private List<@NotBlank String> answers = new ArrayList<String>();	// Includes the correctAnswer.
 
 	@Transient
 	private int selectedAnswerIndex;	// Used in a form when user create a question.
+
+	@Transient
+	@Getter(value = AccessLevel.NONE)
+	@Setter(value = AccessLevel.NONE)
+	private int hash; // Default to 0
+	@Transient
+	@Getter(value = AccessLevel.NONE)
+	@Setter(value = AccessLevel.NONE)
+	private boolean hashIsZero; // Default to false;
+	
 	
 	public Question() {
 	}
@@ -61,15 +73,35 @@ public class Question{
 	}
 	
 	@Override
-	public boolean equals(Object other) {
-		if ( ! (other instanceof Question))
+	public boolean equals(Object obj) {
+		
+		if (this == obj)
+			return true;
+		if ( ! (obj instanceof Question))
 			return false;
-		Question otherQ = (Question) other;
-		return this.questionText.equals(otherQ.questionText);
+		Question otherQ = (Question) obj;
+		if ( ! this.questionText.equals(otherQ.questionText))
+			return false;
+		/* Check if answers are the same - irrelevant of order. */
+		return new HashSet<>(this.answers).equals(new HashSet<>(otherQ.answers));
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return this.questionText.hashCode();
+		
+		int h = hash;
+		if (h == 0 && !hashIsZero) {
+			h = questionText.hashCode();
+			for (String ans : answers) {
+				h += ans.hashCode();
+			}
+			if (h == 0) {
+				hashIsZero = true;
+			} else {
+				hash = h;
+			}
+		}
+		return h;
 	}
+
 }

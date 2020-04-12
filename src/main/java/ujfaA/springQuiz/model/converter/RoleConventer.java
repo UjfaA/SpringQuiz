@@ -1,6 +1,8 @@
-package ujfaA.springQuiz.model;
+package ujfaA.springQuiz.model.converter;
 
 import javax.persistence.AttributeConverter;
+
+import ujfaA.springQuiz.model.Role;
 
 public class RoleConventer implements AttributeConverter<Role, String> {
 

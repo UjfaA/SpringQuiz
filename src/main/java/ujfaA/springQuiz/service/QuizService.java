@@ -16,6 +16,7 @@ public class QuizService {
 	@Autowired
 	private UserService userService;
 	
+	
 	public void storeUsersAnswer(String username, long questionId, String answer) {
 		
 		Question question = questionService.getQuestionById(questionId);
@@ -28,8 +29,9 @@ public class QuizService {
 		return userService.getScore(username);
 	}
 	
-	public void removeQuestion(Long questionId) {
-		userService.removeFromUsersAnswers(questionId);
-		questionService.delete(questionId);
+	public void removeQuestion(long id) {
+		userService.removeFromUsersAnswers(id);
+		questionService.delete(id);
 	}
+	
 }

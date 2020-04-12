@@ -18,10 +18,11 @@ public interface QuestionRepository extends PagingAndSortingRepository<Question,
 	
 	public Set<QuestionDTO> findByCreatedByUsername(String username);
 
-	public QuestionDTO findByQuestionText(String questionText);
+	public Set<Question> findByQuestionText(String questionText);
 
 	public Page<QuestionDTO> findByOrderById(Pageable pageRequest);
-	
+
 	@Query("SELECT q.questionText FROM Question q ORDER BY q.id")
 	public List<String> findAllQuestionTexts();
+
 }

@@ -2,10 +2,11 @@ package ujfaA.springQuiz.controller;
 
 
 import java.security.Principal;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class QuizAdministratorController {
 	
 	@Autowired
 	private QuizService quizService;
+	
 	
 	@GetMapping("/questions")
 	public String getQuestions(ModelMap model) {		
@@ -63,9 +65,15 @@ public class QuizAdministratorController {
 			model.addAttribute("numberOfAnswers", question.getAnswers().size());
 			model.addAttribute("MAX_ANSWERS", 5);
 			return "newQuestion";
-		}	
+		}
+		if (questionService.exist(question)) {
+			redirectAttrs.addAttribute("numberOfAnswers", question.getAnswers().size());			
+			redirectAttrs.addFlashAttribute("message", "A question like this already exist.");
+			redirectAttrs.addFlashAttribute(question);
+			return"redirect:/questions/new";
+		}
 		try {
-			questionService.save(question);			
+			questionService.save(question);		
 		} catch (Exception e) {
 			redirectAttrs.addAttribute("numberOfAnswers", question.getAnswers().size());			
 			redirectAttrs.addFlashAttribute("message", "There was an error while adding the question.");
@@ -74,19 +82,47 @@ public class QuizAdministratorController {
 		}
 		return "redirect:/questions/byMe";
 	}
-	
+
 	@PostMapping("/questions/delete")
-	public String removeQuestion(@RequestParam Long id) {
-		quizService.removeQuestion(id);
-		return "redirect:/questions";
+	public String removeQuestion(@RequestParam Long id, @RequestParam String createdBy,
+							Authentication auth, RedirectAttributes redirectAttrs) {
+		
+		String message;
+
+		if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CONTRIBUTOR")) ) {
+			
+			if (auth.getName().equals(createdBy)) {
+				try {
+					quizService.removeQuestion(id);
+					message = "The question has been removed.";
+				} catch (Exception e) {
+					message = "There had been an error while trying to remove the question.";
+				}
+			}
+			else {
+				message ="You don't have the required permission to delete this question.";
+			}
+			redirectAttrs.addFlashAttribute("message", message);
+			return "redirect:/questions/byMe";				
+		}
+		else {
+			try {
+				quizService.removeQuestion(id);
+				message = "The question has been removed.";
+			} catch (Exception e) {
+				message = "There had been an error while trying to remove the question.";
+			}
+			redirectAttrs.addFlashAttribute("message", message);
+			return "redirect:/questions";
+		}
 	}
-	
+
 	@GetMapping("/users")
 	public String getUsersInfo(ModelMap model) {
 		model.addAttribute("users", userService.getUsersInfo());
 		return "usersInfo";
 	}
-	
+
 	@GetMapping("/users/usersEng")
 	public String getUserEngagement(@RequestParam(name = "q", defaultValue = "-1") int qIndex,
 									@RequestParam(name = "correctly", defaultValue = "false") boolean correctly,
@@ -104,5 +140,6 @@ public class QuizAdministratorController {
 			model.addAttribute("usernames", userService.getUsernamesThatAnswered(q, correctly));
 		}
 		return"usersEngagement";
-	}	
+	}
+
 }

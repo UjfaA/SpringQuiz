@@ -37,11 +37,12 @@ public class QuestionService {
 	public Question getQuestionById(long id) {
 		return questionRepo.findById(id).orElseThrow();
 	}
-	
-	public QuestionDTO getQuestionByQuestionText(String questionText) {
-		return questionRepo.findByQuestionText(questionText);
+
+	public boolean exist(Question question) {
+		Set<Question> fromDB = questionRepo.findByQuestionText(question.getQuestionText());
+		return fromDB.contains(question);
 	}
-		
+	
 	public QuestionDTO getQuestionByIndex(int qIndex) {
 		
 		Pageable pageRequest = PageRequest.of(qIndex, 1);
@@ -66,4 +67,5 @@ public class QuestionService {
 	public List<String> GetQuestionTexts() {
 		return questionRepo.findAllQuestionTexts();
 	}
+
 }
