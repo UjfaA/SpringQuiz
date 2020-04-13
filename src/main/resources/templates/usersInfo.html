@@ -20,18 +20,22 @@
 	<table class ="w3-table w3-bordered w3-centered">
 	 	<thead>
 	 		<tr> 
+	 			<th>Username</th>
 	 			<th>First name</th>
 	 			<th>Last name</th>
 	 			<th>Email</th>
-	 			<th>Username</th>
+	 			<th>Account</th>
+	 			<th>Last logged in</th>
 	 		</tr>
 	 	</thead>
 	 	<tbody>
 	 		<tr th:each="u : ${users}" >
+	 			<td th:text="${u.username}"></td>
 	 			<td th:text="${u.firstName}"></td>
 	 			<td th:text="${u.lastName}"></td>
 	 			<td th:text="${u.email}"></td>
-	 			<td th:text="${u.username}"></td>
+	 			<td th:text="${u.role.displayValue}"></td>
+	 			<td th:text="${u.lastActive}"></td>
 	 		</tr>
 	 	</tbody>
 	 </table>
