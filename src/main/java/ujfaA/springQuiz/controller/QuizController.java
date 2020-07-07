@@ -34,11 +34,11 @@ public class QuizController {
 	
 	@GetMapping("/quiz/start")
 	public String resetAndStart( Principal principal, RedirectAttributes redirectAttr) {
-
+		//TODO
 		if (questionService.getNumberOfQuestions() == 0) {
 			redirectAttr.addFlashAttribute("errorMessage",
-				"Quiz does not have any questions. Administrator needs to add at least 1 question.");
-			return "redirect:/errpage";
+				"Quiz does not have any questions. User with appropriate account needs to add at least 1 question.");
+			return "redirect:/error";
 		}
 		//TODO: reset user score
 		redirectAttr.addAttribute("q", 0);
@@ -62,7 +62,7 @@ public class QuizController {
 			return "redirect:/quiz/completed";	
 			}
 	}
-	
+
 	@PostMapping("/quiz/show")
 	public String userAnswered( Principal principal,
 								@RequestParam(name = "qId") long questionId,
@@ -80,7 +80,18 @@ public class QuizController {
 
 		return "redirect:/quiz/show?q=" + (qIndex + 1);
 	}
-	
+
+	@PostMapping("/quiz/skip")
+	public String skip(	Principal principal,
+						@RequestParam(name = "qId") long questionId,
+						@RequestParam(name = "q") int qIndex,
+						RedirectAttributes redirectAttributes) {
+
+		String username = principal.getName();
+		quizService.storeUsersAnswer(username, questionId, "");
+		return "redirect:/quiz/show?q=" + (qIndex + 1);
+	}
+
 	@GetMapping("/quiz/completed")
 	public String onCompletion(Principal principal, ModelMap model) {
 		String username = principal.getName();

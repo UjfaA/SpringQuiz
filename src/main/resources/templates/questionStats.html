@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title> Spring Quiz - Administrator - Question Stats</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<nav
+	 th:replace="~{fragments/Navigation :: topBar}" >
+	</nav> 
+	<div class="w3-container w3-center w3-padding-large">
+		<h2 th:text="'Questions' + (${param.byMe}? ' added by me' : '')">Question Stats</h2>
+	</div>
+	 
+	 <div align="center">
+		<p th:text="${message}"></p>
+	</div>
+	 
+	<div align="center">
+	<div class="w3-container w3-border w3-border-white w3-hover-border-green w3-section " align="justify" style="width:70%;">
+		<div class="w3-bar">
+			<h5 class="w3-bar-item"> <b th:text="${question.questionText}">Question text</b></h5>
+		</div>
+	 	<ul class="w3-ul">
+ 			<li class="w3-border-bottom"
+ 				th:each="answer,iterStat : ${question.answers}">
+ 				<span th:text="${iterStat.count +'. ' + answer + ' '}">Answer</span>
+ 				<span class="fa fa-check w3-large w3-green" 
+ 					th:if="${answer EQ question.correctAnswer}">
+ 				</span>
+ 			</li>
+		</ul>
+	 </div>
+	 
+	<p th:text=" 'The question was created by ' + ${question.createdBy}" > The question was created by: username </p>
+	<p th:text="${((answeredPercentage >= 0.0)? #numbers.formatPercent(answeredPercentage,1,1) + ' answered this question and ' + #numbers.formatPercent(1.0 - answeredPercentage,1,1) + ' skipped the questions.'
+										: 'None of the user encountered this question in the quiz yet.') }" > </p>
+	<div th:unless="${#aggregates.sum(answersDistribution) == 0.0}">
+		<p> Of those who answered: </p>
+		<p  th:each="a,iteration : ${answersDistribution}"
+			th:text="${iteration.count + '. answer has been chosen by ' + #numbers.formatPercent(a,1,1) + ' of participants.'}">
+			has been chosen by</p>
+	</div>
+	</div>
+	<footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>

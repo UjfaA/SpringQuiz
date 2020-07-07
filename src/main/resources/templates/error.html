@@ -9,10 +9,10 @@
 	<header 
 		th:replace="~{fragments/HeaderAndFooter :: header}">
 	</header>
-	<div>
-	<h2>There was an error</h2>
+	<h1>:-(</h1>
+	<h2>Something went wrong and we couldn't complete your request.</h2>
 	<h5 th:text="${errorMessage}"></h5>
-	</div>
+	<a href="/">Go back to home page</a>
 	<footer
 		th:replace="~{fragments/HeaderAndFooter :: footer}">
 	</footer>

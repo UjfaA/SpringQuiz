@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ujfaA.springQuiz.dto.QuestionDTO;
@@ -82,39 +85,54 @@ public class QuizAdministratorController {
 		}
 		return "redirect:/questions/byMe";
 	}
+	
+	@GetMapping("/questions/{qId:[0-9]+}")
+	public String getQuestionStats(@PathVariable(name = "qId") long qId, Authentication auth, RedirectAttributes redirectAttrs, ModelMap model) {
 
-	@PostMapping("/questions/delete")
-	public String removeQuestion(@RequestParam Long id, @RequestParam String createdBy,
-							Authentication auth, RedirectAttributes redirectAttrs) {
+		QuestionDTO question = questionService.getQuestion(qId);
+		if (question == null)
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Question not found.");
 		
-		String message;
-
 		if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CONTRIBUTOR")) ) {
 			
-			if (auth.getName().equals(createdBy)) {
-				try {
-					quizService.removeQuestion(id);
-					message = "The question has been removed.";
-				} catch (Exception e) {
-					message = "There had been an error while trying to remove the question.";
-				}
+			String author = question.getCreatedBy().getUsername();			
+			if ( ! auth.getName().equals(author)) {
+				redirectAttrs.addFlashAttribute("message","You don't have the required permission to see the question's stats.");
+				return "redirect:/questions/byMe";
 			}
-			else {
-				message ="You don't have the required permission to delete this question.";
-			}
-			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/questions/byMe";				
 		}
-		else {
-			try {
-				quizService.removeQuestion(id);
-				message = "The question has been removed.";
-			} catch (Exception e) {
-				message = "There had been an error while trying to remove the question.";
+		model.addAttribute("question", question);
+		model.addAttribute("answeredPercentage", userService.getAnsweredPercentage(qId));
+		model.addAttribute("answersDistribution", userService.getAnswersDistribution(qId));
+		return "questionStats";
+	}
+
+	@PostMapping("/questions/delete")
+	public String removeQuestion(@RequestParam Long qId, Authentication auth, RedirectAttributes redirectAttrs) {
+		
+		String redirectModifier = "";
+
+		if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_CONTRIBUTOR")) ) {
+
+			QuestionDTO q = questionService.getQuestion(qId);
+			String author = q.getCreatedBy().getUsername();
+			if ( ! auth.getName().equals(author)) {
+				redirectAttrs.addFlashAttribute("message", "You don't have the required permission to delete the question.");
+				return "redirect:/questions/byMe";
 			}
-			redirectAttrs.addFlashAttribute("message", message);
-			return "redirect:/questions";
+			
+			redirectModifier = "/byMe";
 		}
+		
+		String message;
+		try {
+			quizService.removeQuestion(qId);
+			message = "The question has been removed.";
+		} catch (Exception e) {
+			message = "There had been an error while trying to remove the question.";
+		}
+		redirectAttrs.addFlashAttribute("message", message);
+		return "redirect:/questions" + redirectModifier;
 	}
 
 	@GetMapping("/users")
@@ -128,7 +146,7 @@ public class QuizAdministratorController {
 									@RequestParam(name = "correctly", defaultValue = "false") boolean correctly,
 									ModelMap model) {
 
-		model.addAttribute("texts", questionService.GetQuestionTexts());
+		model.addAttribute("texts", questionService.getQuestionTexts());
 		model.addAttribute("selectedIndex", qIndex);
 		model.addAttribute("checked", correctly);
 		

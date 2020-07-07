@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ujfaA.springQuiz.model.Role;
 import ujfaA.springQuiz.model.User;
 import ujfaA.springQuiz.service.UserService;
 
@@ -24,7 +25,10 @@ public class SecurityController {
 	
 	@GetMapping("/registration")
 	public String registration(ModelMap model) {
-	    model.addAttribute(new User());
+		User user = new User();
+		/*default role is administrator*/
+		user.setRole(Role.ADMINISTRATOR);
+	    model.addAttribute(user);
 	    return "registration";
 	}
 		
@@ -67,8 +71,4 @@ public class SecurityController {
 		return "login";
 	}
 	
-	@GetMapping("/errpage")
-	public String handleError() {
-		return "errpage";
-	}
 }

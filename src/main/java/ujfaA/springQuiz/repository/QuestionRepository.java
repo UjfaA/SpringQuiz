@@ -14,8 +14,10 @@ import ujfaA.springQuiz.model.Question;
 
 public interface QuestionRepository extends PagingAndSortingRepository<Question, Long> {
 
+	public QuestionDTO getById(Long questionId);
+
 	public Set<QuestionDTO> findBy();
-	
+
 	public Set<QuestionDTO> findByCreatedByUsername(String username);
 
 	public Set<Question> findByQuestionText(String questionText);

@@ -33,11 +33,17 @@
   			<form class="w3-bar-item w3-right"
   				sec:authorize = "hasRole('CONTRIBUTOR')"
   				th:action="@{/questions/delete}" method="post">
-  				<input type="hidden" name="id" th:value="${question.id}"/>
+  				<input type="hidden" name="qId" th:value="${question.id}"/>
   				<input type="hidden" name="createdBy" th:value="${question.createdBy.username}"/>
   				<input class="w3-button w3-small"
   					 type="submit" value="delete" />
   			</form>
+  			<div class="w3-bar-item w3-right">
+  				<a class=" w3-button w3-small"
+  			 		th:href="@{/questions/{id}(id=${question.id})}">
+  			 		<i class="fa fa-info-circle w3-large" aria-hidden="true"></i>
+  			 			info </a>
+  			</div>
 		</div>
 	 	<ul class="w3-ul">
  			<li class="w3-border-bottom"
@@ -49,9 +55,9 @@
  			</li>
 		</ul>
 	 </div>
-	 
 	 </div>
-	 <footer
+	 
+	<footer
 		th:replace="~{fragments/HeaderAndFooter :: footer}">
 	</footer>
 </body>

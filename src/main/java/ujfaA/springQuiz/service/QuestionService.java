@@ -1,5 +1,6 @@
 package ujfaA.springQuiz.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,20 +22,24 @@ public class QuestionService {
 	@Autowired
 	private QuestionRepository questionRepo;
 
-	
+
 	public Set<QuestionDTO> listAll() {
 		return questionRepo.findBy();
 	}
-	
+
 	public Set<QuestionDTO> listAllByUser(String username) {
 		return questionRepo.findByCreatedByUsername(username);
 	}
-	
+
 	public int getNumberOfQuestions() {
 		return (int) questionRepo.count();
 	}
-	
-	public Question getQuestionById(long id) {
+
+	public QuestionDTO getQuestion(long questionId) {
+		return questionRepo.getById(questionId);
+	}
+
+	public Question getQuestionEntity(long id) {
 		return questionRepo.findById(id).orElseThrow();
 	}
 
@@ -42,7 +47,7 @@ public class QuestionService {
 		Set<Question> fromDB = questionRepo.findByQuestionText(question.getQuestionText());
 		return fromDB.contains(question);
 	}
-	
+
 	public QuestionDTO getQuestionByIndex(int qIndex) {
 		
 		Pageable pageRequest = PageRequest.of(qIndex, 1);
@@ -64,8 +69,8 @@ public class QuestionService {
 		questionRepo.deleteById(id);
 	}
 	
-	public List<String> GetQuestionTexts() {
+	public List<String> getQuestionTexts() {
 		return questionRepo.findAllQuestionTexts();
 	}
-
+	
 }

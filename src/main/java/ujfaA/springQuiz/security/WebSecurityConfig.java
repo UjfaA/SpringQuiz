@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .expressionHandler(getExpressionHandler())
                 .antMatchers("/registration","/about","/errpage").permitAll()
                 .antMatchers("/","/home", "/quiz/**").authenticated()
-                .antMatchers("/questions/byMe", "/questions/new", "/questions/delete").hasRole(Role.CONTRIBUTOR.name())
+                .antMatchers("/questions/byMe", "/questions/new","/questions/{qId:[0-9]+}", "/questions/delete").hasRole(Role.CONTRIBUTOR.name())
                 .antMatchers("/questions", "/users/usersEng").hasRole(Role.MODERATOR.name())
                 .anyRequest().hasRole(Role.ADMINISTRATOR.name())
                 .and()

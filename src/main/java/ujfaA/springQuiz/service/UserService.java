@@ -1,5 +1,7 @@
 package ujfaA.springQuiz.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,38 @@ public class UserService {
 	
 	public void removeFromUsersAnswers(long questionId) {
 		userRepo.removeFromUsersAnswers(questionId);
+	}
+
+	public Float getAnsweredPercentage(long questionId) {
+		
+		List<Integer> ansCount = userRepo.answersChosenCount(questionId);
+		int totalAnswers = 0;
+			for (Integer i : ansCount) {
+				totalAnswers += i;
+			}
+		int timesSkipped = userRepo.skippedCount(questionId);
+		if (totalAnswers + timesSkipped != 0)
+			return ((float) totalAnswers) / (totalAnswers + timesSkipped);
+		else
+			return -1.0f;
+	}
+	
+	public List<Float> getAnswersDistribution(long questionId) {
+		
+		 List<Integer> ansCount = userRepo.answersChosenCount(questionId);
+		 int totalAnswers = 0;
+		 for (Integer i : ansCount) {
+			 totalAnswers += i;
+		 }
+		 List<Float> ansDistribution = new ArrayList<>();
+		 for (Integer i : ansCount) {
+			 if (totalAnswers == 0) {
+				 ansDistribution.add(0.0f);
+				 continue;
+			 }
+			 ansDistribution.add( ((float) i )/ totalAnswers);
+		 }
+		 return ansDistribution;
 	}
 
 }

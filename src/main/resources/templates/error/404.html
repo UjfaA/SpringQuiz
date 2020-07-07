@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html 	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<title> Error</title>
+</head>
+<body>
+	<header 
+		th:replace="~{fragments/HeaderAndFooter :: header}">
+	</header>
+	<h1>:-(</h1>
+	<h2>Something went wrong and we couldn't complete your request.</h2>
+	<h5 th:text="${errorMessage}"></h5>
+	<h3 th:text="${error}">Error code</h3>
+	<p th:text="${'Details: ' + message}" />
+     <p th:text="${'Status: ' + status}" />
+	
+	<a href="/">Go back to home page</a>
+	 <footer
+		th:replace="~{fragments/HeaderAndFooter :: footer}">
+	</footer>
+</body>
+</html>
