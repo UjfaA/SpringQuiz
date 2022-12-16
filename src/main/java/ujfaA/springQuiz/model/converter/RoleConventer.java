@@ -1,6 +1,6 @@
 package ujfaA.springQuiz.model.converter;
 
-import javax.persistence.AttributeConverter;
+import jakarta.persistence.AttributeConverter;
 
 import ujfaA.springQuiz.model.Role;
 

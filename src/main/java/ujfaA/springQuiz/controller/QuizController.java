@@ -34,7 +34,6 @@ public class QuizController {
 	
 	@GetMapping("/quiz/start")
 	public String resetAndStart( Principal principal, RedirectAttributes redirectAttr) {
-		//TODO
 		if (questionService.getNumberOfQuestions() == 0) {
 			redirectAttr.addFlashAttribute("errorMessage",
 				"Quiz does not have any questions. User with appropriate account needs to add at least 1 question.");

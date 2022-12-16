@@ -19,8 +19,10 @@ public class EntityAuditingConfig {
 	@Bean
 	public AuditorAware<User> auditorAware() {
 		
-		AuditorAware<User> currentAuditor = () -> {String signedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
-													return userRepository.findByUsername(signedInUser);};
+		AuditorAware<User> currentAuditor = () -> {
+			String signedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
+			return userRepository.findByUsername(signedInUser);
+		};
 		return currentAuditor;
 	}
 }

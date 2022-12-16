@@ -7,14 +7,15 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 import org.passay.IllegalCharacterRule;
 import org.passay.MessageResolver;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.PropertiesMessageResolver;
+import org.passay.Rule;
 import org.passay.RuleResult;
 
 public class NameConstraintValidator implements ConstraintValidator<ValidName, String> {
@@ -24,18 +25,17 @@ public class NameConstraintValidator implements ConstraintValidator<ValidName, S
 		
 		Properties props = new Properties();
 		try (var propertiesStream = new FileInputStream("src/main/resources/messages.properties")) {
-		props.load(propertiesStream);
+			props.load(propertiesStream);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		MessageResolver resolver = new PropertiesMessageResolver(props);
 		
-		PasswordValidator validator = new PasswordValidator(resolver, List.of(
-				new IllegalCharacterRule(
-						new char[]{'<','>','=',';',':','/','\\','*','+','-'},true)
-		));
+		MessageResolver resolver = new PropertiesMessageResolver(props);
+		List<Rule> rules = List.of( new IllegalCharacterRule( new char[]{'<','>','=',';',':','/','\\','*','+'}, true));
+		PasswordValidator validator = new PasswordValidator( resolver, rules);
+		
 		RuleResult result = validator.validate(new PasswordData(password));
         
 		if (result.isValid())

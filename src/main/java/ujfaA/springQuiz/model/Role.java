@@ -15,20 +15,14 @@ public enum Role {
 		this.displayValue = display;
 		this.shortName = shortName;
 	}
-	
-	public static Role fromShortName(String shortName ) {
-		
-		switch (shortName) {
-			case "user":
-				return USER;
-			case "cntr":
-				return CONTRIBUTOR;
-			case "mod":
-				return MODERATOR;
-			case "admn": 
-				return ADMINISTRATOR;
-			default:
-				throw new IllegalArgumentException("Short[" + shortName + "] not supported.");
-		}
+
+	public static Role fromShortName(String shortName ) {		
+		return switch (shortName) {
+			case "user"	-> USER;
+			case "cntr"	-> CONTRIBUTOR;
+			case "mod"	-> MODERATOR;
+			case "admn"	-> ADMINISTRATOR;
+			default -> throw new IllegalArgumentException("Short[" + shortName + "] not supported.");
+		};
 	}
 }

@@ -6,13 +6,13 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.model.Question;
 
 
-public interface QuestionRepository extends PagingAndSortingRepository<Question, Long> {
+public interface QuestionRepository extends ListCrudRepository<Question, Long> {
 
 	public QuestionDTO getById(Long questionId);
 

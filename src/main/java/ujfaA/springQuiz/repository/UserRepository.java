@@ -6,12 +6,12 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import ujfaA.springQuiz.dto.UserDTO;
 import ujfaA.springQuiz.model.User;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+public interface UserRepository extends ListCrudRepository<User, Long> {
 	
 	public Boolean existsUserByUsername(String username);
 	
@@ -62,9 +62,9 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 		value = "DELETE FROM users_answers WHERE question_id = ?1")
 	public void removeFromUsersAnswers(long questionId);
 	
-	@Query("SELECT count (answer)"
-			+ " FROM User u, In(u.answers) ans"
-			+ " WHERE KEY(ans).id = :questionId AND ans = '' ")
+	@Query("SELECT count (u)"
+			+ " FROM User u"
+			+ " WHERE KEY(u.answers).id = :questionId AND VALUE(u.answers) = '' ")
 	public int skippedCount(long questionId);
 	
 	@Query(nativeQuery = true,
