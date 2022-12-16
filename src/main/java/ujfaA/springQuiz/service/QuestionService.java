@@ -1,6 +1,5 @@
 package ujfaA.springQuiz.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -59,9 +58,9 @@ public class QuestionService {
 	
 	public Question save(Question q) {
 
-		List<String> ans = q.getAnswers();
 		int markedAsCorrect = q.getSelectedAnswerIndex();  
-		q.setCorrectAnswer(ans.get(markedAsCorrect));
+		String correctAnswer = q.getAnswers().get(markedAsCorrect);
+		q.setCorrectAnswer(correctAnswer);
 		return questionRepo.save(q);
 	}
 	

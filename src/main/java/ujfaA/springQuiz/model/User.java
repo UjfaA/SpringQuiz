@@ -4,12 +4,13 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import ujfaA.springQuiz.model.converter.RoleConventer;
 import ujfaA.springQuiz.model.validator.ValidName;
 import ujfaA.springQuiz.model.validator.ValidPassword;

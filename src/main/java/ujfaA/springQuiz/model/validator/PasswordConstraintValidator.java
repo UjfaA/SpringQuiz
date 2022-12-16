@@ -1,14 +1,15 @@
 package ujfaA.springQuiz.model.validator;
 
+import static java.util.stream.Collectors.joining;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -48,17 +49,21 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 				));
 		
 		RuleResult result = validator.validate(new PasswordData(password));
-        
+
 		if (result.isValid())
-            return true;
-        
-        List<String> messages = validator.getMessages(result);
-        
-        String messageTemplate = messages.stream()
-        		.collect(Collectors.joining(" "));
-        context.buildConstraintViolationWithTemplate(messageTemplate)
-        	.addConstraintViolation()
-        	.disableDefaultConstraintViolation();
+			return true;
+
+		String messages =
+				validator
+				.getMessages(result)
+				.stream()
+				.collect(joining(" "));
+
+		context
+			.buildConstraintViolationWithTemplate(messages)
+			.addConstraintViolation()
+			.disableDefaultConstraintViolation();
+		
 		return false;
 	}
 
