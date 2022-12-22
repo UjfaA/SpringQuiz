@@ -52,9 +52,10 @@ public class QuizAdministratorController {
 	}
 	
 	@GetMapping("/questions/new")
-	public String newQuestion(@ModelAttribute Question question,
-							@RequestParam(name = "numberOfAnswers", defaultValue = "3") int numberOfAnswers,
-							ModelMap model) {
+	public String newQuestion(
+			@ModelAttribute Question question,
+			@RequestParam(name = "numberOfAnswers", defaultValue = "3") int numberOfAnswers,
+			ModelMap model) {
 		
 		model.addAttribute("numberOfAnswers", numberOfAnswers);
 		model.addAttribute("MAX_ANSWERS", 5);
@@ -87,7 +88,7 @@ public class QuizAdministratorController {
 	}
 	
 	@GetMapping("/questions/{qId:[0-9]+}")
-	public String getQuestionStats(@PathVariable(name = "qId") long qId, Authentication auth, RedirectAttributes redirectAttrs, ModelMap model) {
+	public String getQuestionStats(@PathVariable("qId") long qId, Authentication auth, RedirectAttributes redirectAttrs, ModelMap model) {
 
 		QuestionDTO question = questionService.getQuestion(qId);
 		if (question == null)
@@ -108,7 +109,7 @@ public class QuizAdministratorController {
 	}
 
 	@PostMapping("/questions/delete")
-	public String removeQuestion(@RequestParam Long qId, Authentication auth, RedirectAttributes redirectAttrs) {
+	public String removeQuestion(@RequestParam long qId, Authentication auth, RedirectAttributes redirectAttrs) {
 		
 		String redirectModifier = "";
 

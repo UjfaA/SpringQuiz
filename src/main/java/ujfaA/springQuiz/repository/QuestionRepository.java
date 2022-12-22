@@ -14,7 +14,7 @@ import ujfaA.springQuiz.model.Question;
 
 public interface QuestionRepository extends ListCrudRepository<Question, Long> {
 
-	public QuestionDTO getById(Long questionId);
+	public QuestionDTO getDtoById(long questionId);
 
 	public Set<QuestionDTO> findBy();
 
