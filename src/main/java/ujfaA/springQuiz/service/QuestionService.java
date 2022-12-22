@@ -35,10 +35,10 @@ public class QuestionService {
 	}
 
 	public QuestionDTO getQuestion(long questionId) {
-		return questionRepo.getById(questionId);
+		return questionRepo.getDtoById(questionId);
 	}
 
-	public Question getQuestionEntity(long id) {
+	Question getQuestionEntity(long id) {
 		return questionRepo.findById(id).orElseThrow();
 	}
 

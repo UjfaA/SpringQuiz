@@ -10,12 +10,15 @@
 	</parent>
 	<groupId>ujfaA</groupId>
 	<artifactId>springQuiz</artifactId>
-	<version>0.2a</version>
+	<version>0.2b</version>
 	<name>SpringQuiz</name>
 	<description>SpringQuiz web app</description>
 
 	<properties>
 		<java.version>19</java.version>
+		<thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
+		<thymeleaf.spring6.version>3.1.1.RELEASE</thymeleaf.spring6.version>
+		<thymeleaf.extras.springsecurity6.version>3.1.1.RELEASE</thymeleaf.extras.springsecurity6.version>
 	</properties>
 	
 	<dependencies>
@@ -40,8 +43,8 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -61,12 +64,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-devtools</artifactId>-->
+<!--			<scope>runtime</scope>-->
+<!--			<optional>true</optional>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

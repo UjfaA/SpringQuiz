@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface QuestionDTO {
 	
-	Long getId();
+	long getId();
 	CreatedBy getCreatedBy();
 	String getQuestionText();
 	String getCorrectAnswer();
