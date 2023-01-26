@@ -5,22 +5,32 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ujfaA</groupId>
 	<artifactId>springQuiz</artifactId>
-	<version>0.2b</version>
+	<version>0.2c</version>
 	<name>SpringQuiz</name>
 	<description>SpringQuiz web app</description>
 
 	<properties>
 		<java.version>19</java.version>
-		<thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
-		<thymeleaf.spring6.version>3.1.1.RELEASE</thymeleaf.spring6.version>
-		<thymeleaf.extras.springsecurity6.version>3.1.1.RELEASE</thymeleaf.extras.springsecurity6.version>
+		<spring.version>6.0.4</spring.version>
+		<spring-security.version>6.1.0-M1</spring-security.version>
 	</properties>
 	
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
