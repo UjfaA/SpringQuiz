@@ -1,5 +1,12 @@
 # SpringQuiz
 
+```diff
++ Spring Quiz is being reimagined to expand its capabilities and integrate exciting new technologies.
+
+  The original (basic) implementation will continue to work in the meantime.
+```
+
+
 SpringQuiz is Demo Quiz web app. It is running on Heroku platform.  
 You can check it out at: [https://spring-quiz.herokuapp.com](https://spring-quiz.herokuapp.com)
 
