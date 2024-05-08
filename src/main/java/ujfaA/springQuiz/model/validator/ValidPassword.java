@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.model.validator;
+/*
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -22,3 +23,4 @@ public @interface ValidPassword {
 
     Class<? extends Payload>[] payload() default {};
 }
+*/

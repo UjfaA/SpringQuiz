@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.controller;
+/*
 
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,3 +99,4 @@ public class QuizController {
 		return "completion";
 	}
 }
+*/

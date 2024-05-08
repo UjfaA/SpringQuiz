@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.security;
+/*
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,3 +31,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 }
+*/

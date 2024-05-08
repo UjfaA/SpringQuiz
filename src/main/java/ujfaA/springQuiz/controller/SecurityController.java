@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.controller;
+/*
 
 import jakarta.validation.Valid;
 
@@ -27,6 +28,7 @@ public class SecurityController {
 	public String registration(ModelMap model) {
 		User user = new User();
 		/*default role is administrator*/
+/*
 		user.setRole(Role.ADMINISTRATOR);
 	    model.addAttribute(user);
 	    return "registration";
@@ -72,3 +74,4 @@ public class SecurityController {
 	}
 	
 }
+*/

@@ -1,5 +1,5 @@
 package ujfaA.springQuiz.controller;
-
+/*
 
 import java.security.Principal;
 import jakarta.validation.Valid;
@@ -162,3 +162,4 @@ public class QuizAdministratorController {
 	}
 
 }
+ */

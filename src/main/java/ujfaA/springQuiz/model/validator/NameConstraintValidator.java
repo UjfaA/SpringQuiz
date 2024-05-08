@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.model.validator;
+/*
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,3 +53,4 @@ public class NameConstraintValidator implements ConstraintValidator<ValidName, S
 	}
 
 }
+ */

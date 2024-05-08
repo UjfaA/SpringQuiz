@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.model.validator;
+/*
 
 import static java.util.stream.Collectors.joining;
 
@@ -68,3 +69,4 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 	}
 
 }
+*/

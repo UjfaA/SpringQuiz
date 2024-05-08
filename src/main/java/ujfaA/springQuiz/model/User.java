@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import ujfaA.springQuiz.model.converter.RoleConventer;
-import ujfaA.springQuiz.model.validator.ValidName;
-import ujfaA.springQuiz.model.validator.ValidPassword;
+// import ujfaA.springQuiz.model.validator.ValidName;
+// import ujfaA.springQuiz.model.validator.ValidPassword;
 
 @NamedNativeQuery(
 name = "User.countCorrectAnswers",
@@ -33,11 +33,11 @@ public class User {
 	private Long id;
 	
 	@NotBlank
-	@ValidName
+//	@ValidName
 	@Column(unique = true, nullable = false)
 	private String username;
 	
-	@ValidPassword
+//	@ValidPassword
 	@Column(nullable = false)
 	private String password;
 	
@@ -46,10 +46,10 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String email;
 	
-	@ValidName
+//	@ValidName
 	private String firstName;
 	
-	@ValidName
+//	@ValidName
 	private String lastName;	
 
 	private LocalDateTime lastActive;

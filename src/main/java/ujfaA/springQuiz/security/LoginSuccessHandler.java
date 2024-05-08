@@ -1,4 +1,5 @@
 package ujfaA.springQuiz.security;
+/*
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -41,3 +42,4 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 		return "/home";
 	}
 }
+*/
