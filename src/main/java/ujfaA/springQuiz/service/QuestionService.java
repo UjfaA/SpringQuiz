@@ -1,5 +1,5 @@
 package ujfaA.springQuiz.service;
-
+/* 
 import java.util.List;
 import java.util.Set;
 
@@ -8,19 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.model.Question;
-import ujfaA.springQuiz.repository.QuestionRepository;
 
 @Service
-@Transactional
 public class QuestionService {
-	
-	@Autowired
-	private QuestionRepository questionRepo;
-
 
 	public Set<QuestionDTO> listAll() {
 		return questionRepo.findBy();
@@ -73,3 +66,4 @@ public class QuestionService {
 	}
 	
 }
+*/

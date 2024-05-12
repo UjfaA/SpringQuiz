@@ -1,30 +1,26 @@
 package ujfaA.springQuiz.service;
-
+/*
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ujfaA.springQuiz.dto.QuestionDTO;
 import ujfaA.springQuiz.dto.UserDTO;
 import ujfaA.springQuiz.model.User;
-import ujfaA.springQuiz.repository.UserRepository;
 
 @Service
-@Transactional
 public class UserService {
 	
 	@Autowired
 	private UserRepository userRepo;
 
-/*
+
 	@Autowired
     private PasswordEncoder bCryptPasswordEncoder;
-*/	
+	
 	public boolean usernameIsAvaible(String username) {
 		return ( ! userRepo.existsUserByUsername(username));
 	}
@@ -109,3 +105,4 @@ public class UserService {
 	}
 
 }
+*/

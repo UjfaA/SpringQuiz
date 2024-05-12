@@ -1,13 +1,9 @@
-package ujfaA.springQuiz.model;
+package fun.quizapp.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -17,55 +13,35 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@Entity @EntityListeners(AuditingEntityListener.class)
-@Table(name="questions")
 @Getter @Setter
 public class Question{
 	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "question_id")
 	private long id;
 	
-	@CreatedBy
-	@ManyToOne(targetEntity = User.class, optional = false)
-	@JoinColumn(name="created_by_user", referencedColumnName = "user_id", nullable = false)
 	private User createdBy;
 	
 	/* validation */
 	@NotBlank
-	//
-	@Column(nullable = false)
 	private String questionText;
 	
-	@Column(nullable = false)
 	private String correctAnswer;
 	
 	/* validation */
 	@NotEmpty()
 	@UniqueElements(message = "Each answer has to be different.")
-	//
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "question_id"))
-	@OrderColumn(name = "ordinal", columnDefinition = "tinyint") 
-	@Column(name = "answer", nullable = false)
 	private List<@NotBlank String> answers = new ArrayList<String>();	// Includes the correctAnswer.
 
-	@Transient
-	private int selectedAnswerIndex;	// Used in a form when user create a question.
 
-	@Transient
 	@Getter(value = AccessLevel.NONE)
 	@Setter(value = AccessLevel.NONE)
 	private int hash; // Default to 0
-	@Transient
+
 	@Getter(value = AccessLevel.NONE)
 	@Setter(value = AccessLevel.NONE)
 	private boolean hashIsZero; // Default to false;
 	
 	
-	public Question() {
-	}
+	public Question() {}
 	
 	@Override
 	public String toString() {
