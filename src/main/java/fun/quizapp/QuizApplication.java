@@ -1,4 +1,4 @@
-package ujfaA.springQuiz;
+package fun.quizapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

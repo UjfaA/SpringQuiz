@@ -1,7 +1,7 @@
-package ujfaA.springQuiz.views;
+package fun.quizapp.views;
 
-import ujfaA.springQuiz.views.about.AboutView;
-import ujfaA.springQuiz.views.helloworld.HelloWorldView;
+import fun.quizapp.views.about.AboutView;
+import fun.quizapp.views.helloworld.HelloWorldView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Footer;

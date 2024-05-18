@@ -1,6 +1,6 @@
-package ujfaA.springQuiz.views.helloworld;
+package fun.quizapp.views.helloworld;
 
-import ujfaA.springQuiz.views.MainLayout;
+import fun.quizapp.views.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
