@@ -1,20 +1,33 @@
-package ujfaA.springQuiz.service;
-/*
+package fun.quizapp.model.quiz;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.eclipse.store.integrations.spring.boot.types.concurrent.Read;
+import org.eclipse.store.storage.embedded.types.EmbeddedStorageManager;
 import org.springframework.stereotype.Service;
 
-import ujfaA.springQuiz.model.Question;
-import ujfaA.springQuiz.model.User;
+import fun.quizapp.model.DataRoot;
+import lombok.RequiredArgsConstructor;
 
 
 @Service
+@RequiredArgsConstructor
 public class QuizService {
+
+	private final EmbeddedStorageManager storage;
+
+	@Read
+	public Stream<Quiz> getAll() {
+		var data = (DataRoot) storage.root();
+//		return new ArrayList<>(data.getQuizes()).stream();
+		return  new ArrayList<>( List.of( new Quiz(), new Quiz() )).stream(); 
+	}
+	/*
 	
-	@Autowired 
 	private QuestionService questionService;
 	
-	@Autowired
 	private UserService userService;
 	
 	
@@ -35,5 +48,5 @@ public class QuizService {
 		questionService.delete(id);
 	}
 	
+	*/
 }
-*/

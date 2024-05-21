@@ -3,9 +3,13 @@ package fun.quizapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import fun.quizapp.model.quiz.Quiz;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter @Setter
 public class DataRoot {
 
-	public List<Question> questions = new ArrayList<>();
+	private List<Quiz> quizes = new ArrayList<>();
 
 }
