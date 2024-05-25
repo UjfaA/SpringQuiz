@@ -5,8 +5,8 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.theme.lumo.LumoUtility;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
+import com.vaadin.flow.theme.lumo.LumoUtility.AlignSelf;
 import com.vaadin.flow.theme.lumo.LumoUtility.Background;
 import com.vaadin.flow.theme.lumo.LumoUtility.BorderRadius;
 import com.vaadin.flow.theme.lumo.LumoUtility.Display;
@@ -20,10 +20,11 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 
 import fun.quizapp.model.quiz.Quiz;
+import fun.quizapp.views.quiz.QuestionsView;
 
-class QuizCardView extends ListItem {
+class QuizGalleryCard extends ListItem {
 
-	QuizCardView(Quiz quiz) {
+	QuizGalleryCard(Quiz quiz) {
 
 		addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM, BorderRadius.LARGE);
 
@@ -34,7 +35,7 @@ class QuizCardView extends ListItem {
 		image.setAlt(quiz.getTitleImageAlt());
 
 		Div imageContainer = new Div();
-		imageContainer.addClassNames(Background.CONTRAST, Display.FLEX, AlignItems.CENTER, JustifyContent.CENTER, LumoUtility.AlignSelf.CENTER,
+		imageContainer.addClassNames(Background.CONTRAST, Display.FLEX, AlignItems.CENTER, JustifyContent.CENTER, AlignSelf.CENTER,
 				Margin.Bottom.MEDIUM, Overflow.HIDDEN, BorderRadius.MEDIUM);
 		imageContainer.setHeight("100px");
 		imageContainer.setWidth( "100%");
@@ -54,6 +55,7 @@ class QuizCardView extends ListItem {
 
 		add(imageContainer, title, subtitle, description);
 
-		addClickListener( click -> System.out.println(quiz.getTitle() + " clicked."));
+		addClickListener( click -> this.getUI().ifPresent( ui ->
+			ui.navigate(QuestionsView.class, quiz.getId())));
 	}
 }

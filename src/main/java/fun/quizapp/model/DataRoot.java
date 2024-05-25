@@ -1,15 +1,27 @@
 package fun.quizapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import static lombok.AccessLevel.PACKAGE;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.eclipse.serializer.reference.Lazy;
+
+import fun.quizapp.model.quiz.Question;
 import fun.quizapp.model.quiz.Quiz;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Getter @Setter
+@Accessors(fluent = true)
+@Getter(PACKAGE)
 public class DataRoot {
 
-	private List<Quiz> quizes = new ArrayList<>();
+	private final AtomicLong nextQuizId = new AtomicLong(12345);
+
+	private final List<Quiz> quizes = new ArrayList<>();
+
+	private final HashMap<Long, Lazy<List<Question>>> questions = new HashMap<>();
 
 }

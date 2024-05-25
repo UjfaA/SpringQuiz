@@ -1,7 +1,6 @@
 package fun.quizapp.views;
 
 import fun.quizapp.views.about.AboutView;
-import fun.quizapp.views.helloworld.HelloWorldView;
 import fun.quizapp.views.quizgallery.QuizGalleryView;
 
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -54,7 +53,6 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
 
 		nav.addItem(new SideNavItem("Quiz Gallery", QuizGalleryView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
-        nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
         nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;

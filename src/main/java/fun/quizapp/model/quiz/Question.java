@@ -1,4 +1,4 @@
-package fun.quizapp.model;
+package fun.quizapp.model.quiz;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,9 +6,9 @@ import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.validator.constraints.UniqueElements;
+//import org.hibernate.validator.constraints.UniqueElements;
 
-import lombok.AccessLevel;
+//import fun.quizapp.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,30 +18,16 @@ public class Question{
 	
 	private long id;
 	
-	private User createdBy;
+//	private User createdBy;
 	
 	/* validation */
 	@NotBlank
 	private String questionText;
 	
-	private String correctAnswer;
-	
 	/* validation */
 	@NotEmpty()
-	@UniqueElements(message = "Each answer has to be different.")
-	private List<@NotBlank String> answers = new ArrayList<String>();	// Includes the correctAnswer.
-
-
-	@Getter(value = AccessLevel.NONE)
-	@Setter(value = AccessLevel.NONE)
-	private int hash; // Default to 0
-
-	@Getter(value = AccessLevel.NONE)
-	@Setter(value = AccessLevel.NONE)
-	private boolean hashIsZero; // Default to false;
-	
-	
-	public Question() {}
+//	@UniqueElements(message = "Each answer has to be different.")
+	private List<Answer> answers = new ArrayList<>();
 	
 	@Override
 	public String toString() {
@@ -64,20 +50,7 @@ public class Question{
 
 	@Override
 	public int hashCode() {
-		
-		int h = hash;
-		if (h == 0 && !hashIsZero) {
-			h = questionText.hashCode();
-			for (String ans : answers) {
-				h += ans.hashCode();
-			}
-			if (h == 0) {
-				hashIsZero = true;
-			} else {
-				hash = h;
-			}
-		}
-		return h;
+		return questionText.hashCode();
 	}
 
 }

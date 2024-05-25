@@ -1,9 +1,6 @@
 package fun.quizapp.model;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -30,13 +27,6 @@ public class User {
 	private String lastName;	
 
 	private LocalDateTime lastActive;
-
-	private Map<Question, String> answers = new HashMap<>();
-
-	
-	public void storeAnsweredQuestion(Question question, String answer) {
-		answers.put(question, answer);
-	}
 
 	@Override
 	public String toString() {
