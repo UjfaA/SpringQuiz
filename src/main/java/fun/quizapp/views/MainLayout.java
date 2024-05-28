@@ -2,6 +2,7 @@ package fun.quizapp.views;
 
 import fun.quizapp.views.about.AboutView;
 import fun.quizapp.views.quizgallery.QuizGalleryView;
+import fun.quizapp.views.quizmanagement.QuizMangementView;
 
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -52,8 +53,10 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-		nav.addItem(new SideNavItem("Quiz Gallery", QuizGalleryView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
-        nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
+		nav.addItem(
+			new SideNavItem("Quiz Gallery", QuizGalleryView.class, LineAwesomeIcon.GLOBE_SOLID.create()),
+			new SideNavItem("Quiz Management", QuizMangementView.class, LineAwesomeIcon.WRENCH_SOLID.create()),
+			new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
         return nav;
     }

@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.toCollection;
 import java.util.ArrayList;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.html.OrderedList;
@@ -15,7 +14,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
-import com.vaadin.flow.theme.lumo.LumoUtility.Background;
 import com.vaadin.flow.theme.lumo.LumoUtility.Display;
 import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
@@ -34,24 +32,14 @@ import fun.quizapp.views.MainLayout;
 @RouteAlias(value = "", layout = MainLayout.class)
 public class QuizGalleryView extends Main {
 	
-	public QuizGalleryView(QuizService service) {
+	private final QuizService service;
+	private final OrderedList quizContainer = new OrderedList();
 
-		OrderedList quizContainer = new OrderedList();
-		quizContainer.addClassNames(Gap.LARGE, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
+	public QuizGalleryView( QuizService service ) {
 		
-		Button btnRefresh = new Button("Refresh", click -> {
-			quizContainer.removeAll();
-			var quizes = service.getAll()
-					.map(QuizGalleryCard::new)
-					.collect(toCollection(ArrayList<Component>::new));
-			quizContainer.add(quizes);
-			quizContainer.addComponentAsFirst(new NewQuizGalleryCard(service));
-		});
-		Button btnNukeIt  = new Button("Nuke It", click -> {
-			service.nukeIt();
-			btnRefresh.click();
-		});
-		btnNukeIt.addClassName(Background.ERROR);
+		this.service = service;
+
+		quizContainer.addClassNames(Gap.LARGE, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
 
 		addClassNames("quiz-gallery-view");
 		addClassNames(MaxWidth.SCREEN_LARGE, Margin.Horizontal.AUTO, Padding.Bottom.LARGE, Padding.Horizontal.LARGE);
@@ -66,15 +54,20 @@ public class QuizGalleryView extends Main {
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.addClassNames(AlignItems.BASELINE, JustifyContent.BETWEEN);
-		horizontalLayout.add(h2, btnRefresh, btnNukeIt, sortBy);
+		horizontalLayout.add(h2, sortBy);
 		
+		displayQuizes();
+
+		add(horizontalLayout, quizContainer);
+	}
+
+	void displayQuizes() {
 		var quizes = service.getAll()
 				.map(QuizGalleryCard::new)
 				.collect(toCollection(ArrayList<Component>::new));
+		quizContainer.removeAll();
 		quizContainer.add(quizes);
 		quizContainer.addComponentAsFirst(new NewQuizGalleryCard(service));
-		
-		add(horizontalLayout, quizContainer);
 	}
 
 }
