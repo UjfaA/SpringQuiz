@@ -23,6 +23,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import com.vaadin.flow.theme.lumo.LumoUtility.MaxWidth;
 import com.vaadin.flow.theme.lumo.LumoUtility.Padding;
 
+import fun.quizapp.ai.AIService;
 import fun.quizapp.model.QuizService;
 import fun.quizapp.views.MainLayout;
 
@@ -31,13 +32,15 @@ import fun.quizapp.views.MainLayout;
 @Route(value = "quiz-gallery", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 public class QuizGalleryView extends Main {
-	
+
 	private final QuizService service;
+	private final AIService	aiService;
 	private final OrderedList quizContainer = new OrderedList();
 
-	public QuizGalleryView( QuizService service ) {
+	public QuizGalleryView( QuizService service, AIService aiService ) {
 		
 		this.service = service;
+		this.aiService = aiService;
 
 		quizContainer.addClassNames(Gap.LARGE, Display.GRID, ListStyleType.NONE, Margin.NONE, Padding.NONE);
 
@@ -67,7 +70,8 @@ public class QuizGalleryView extends Main {
 				.collect(toCollection(ArrayList<Component>::new));
 		quizContainer.removeAll();
 		quizContainer.add(quizes);
-		quizContainer.addComponentAsFirst(new NewQuizGalleryCard(service));
+		quizContainer.addComponentAsFirst( new AIQuizGalleryCard(aiService) );
+		quizContainer.addComponentAsFirst( new NewQuizGalleryCard(service) );
 	}
 
 }

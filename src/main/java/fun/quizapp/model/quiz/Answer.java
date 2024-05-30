@@ -10,6 +10,11 @@ public class Answer {
 	private String	text;
 	private boolean correct;
 
+
+	public Answer() {
+
+	}
+
 	public Answer( String text ) {
 		this.text = text;
 	}
