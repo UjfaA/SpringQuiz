@@ -91,7 +91,10 @@ public class QuizService {
 		q3.getAnswers().add(new Answer("C3"));
 
 		var questions = List.of(q1, q2, q3);
-		questions.forEach( q -> q.setQuestionText("What is the answer?"));
+		questions.forEach( q -> { 
+			q.setQuestionText("What is the answer?");
+			q.getAnswers().get(2).setCorrect(true);
+		});
 
 		return questions;
 	}

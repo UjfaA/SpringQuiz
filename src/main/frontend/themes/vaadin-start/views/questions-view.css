@@ -1,0 +1,18 @@
+
+.question-card vaadin-radio-group vaadin-radio-button {
+	margin-left: 9px;
+}
+
+.question-card vaadin-radio-group::part(label) {
+	font-size:var(--lumo-font-size-m);
+}
+
+.question-card vaadin-radio-group::part(helper-text) {
+	font-size:var(--lumo-font-size-m);
+}
+.question-card .primary::part(helper-text) {
+	--vaadin-input-field-helper-color : var(--lumo-primary-text-color);
+}
+.question-card .error::part(helper-text) {
+	--vaadin-input-field-helper-color : var(--lumo-error-text-color);
+}

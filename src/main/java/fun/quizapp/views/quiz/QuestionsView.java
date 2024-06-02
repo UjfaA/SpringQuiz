@@ -3,18 +3,23 @@ package fun.quizapp.views.quiz;
 import fun.quizapp.model.QuizService;
 import fun.quizapp.views.MainLayout;
 
+import static java.util.List.copyOf;
 import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.toCollection;
 
-import com.vaadin.flow.component.Key;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 
 @PageTitle("Quiz")
@@ -22,6 +27,9 @@ import com.vaadin.flow.router.Route;
 public class QuestionsView extends VerticalLayout implements HasUrlParameter<Long> {
 
 	private final QuizService service;
+	private List<QuestionCard> questions;
+	private final H1 quizName;
+	private final VerticalLayout questionsDiv;
 
     public QuestionsView( QuizService service ) {
 
@@ -29,18 +37,36 @@ public class QuestionsView extends VerticalLayout implements HasUrlParameter<Lon
 		
 		setMargin(true);
 		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+		addClassName(LumoUtility.Gap.LARGE);
 
-        Button btnSubmit = new Button("Submit Answers",
-				click -> Notification.show("Thank You! Answers are submitted.", 3333, Position.BOTTOM_STRETCH));
-    	btnSubmit.addClickShortcut(Key.ENTER);
+		quizName = new H1("Quiz");
 
-		add(btnSubmit);
+		H3 summary = new H3();
+		summary.setVisible(false);
+
+		questionsDiv = new VerticalLayout(Alignment.START);
+		var questionsOuterDiv = new HorizontalLayout(Alignment.CENTER, questionsDiv);
+		
+		Button btnEvaluate = new Button("Evaluate", click -> {
+			int score = 0;
+			for (QuestionCard q : this.questions) {
+				score += q.evaluate();
+			}
+			summary.setText("Your score is: " + score );
+			summary.setVisible(true);
+		});
+		
+		add(quizName, questionsOuterDiv, btnEvaluate, summary);
     }
 
 	@Override
 	public void setParameter(BeforeEvent event, Long id) {
-		add( service.getQuestions(id)
-					.collect(mapping(QuestionCard::new, toUnmodifiableList())) );
+		questions = service.getQuestions(id)
+					.collect( mapping( QuestionCard::new, toCollection(ArrayList<QuestionCard>::new) ));
+		questionsDiv.add( copyOf(questions) );
+
+		service.getById(id).ifPresent(
+				quiz -> quizName.setText(quiz.getTitle()));
 	}
 
 }

@@ -19,6 +19,8 @@ import lombok.Setter;
 public class Question{
 	
 	private long id;
+
+	private int points = 1;
 	
 //	private User createdBy;
 	
