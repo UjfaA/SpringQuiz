@@ -12,7 +12,7 @@ public class Quiz implements Cloneable {
 	private String
 		title = "Title",
 		subtitle = "A fun quiz!",
-		description ="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.";
+		description = "";
 
 	public String getTitleImage() {
 		return "icons\\icon.png";

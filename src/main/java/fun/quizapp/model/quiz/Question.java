@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 //import org.hibernate.validator.constraints.UniqueElements;
@@ -26,7 +24,6 @@ public class Question{
 	
 	/* validation */
 	@NotBlank
-	@JsonAlias({"question"})
 	private String questionText;
 	
 	/* validation */
