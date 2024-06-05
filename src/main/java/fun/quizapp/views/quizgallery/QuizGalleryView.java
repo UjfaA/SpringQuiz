@@ -12,7 +12,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
 import com.vaadin.flow.theme.lumo.LumoUtility.Display;
 import com.vaadin.flow.theme.lumo.LumoUtility.FontSize;
@@ -28,9 +27,8 @@ import fun.quizapp.model.QuizService;
 import fun.quizapp.views.MainLayout;
 
 
-@PageTitle("Quiz Gallery")
+@PageTitle("Quiz App")
 @Route(value = "quiz-gallery", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
 public class QuizGalleryView extends Main {
 
 	private final QuizService service;
