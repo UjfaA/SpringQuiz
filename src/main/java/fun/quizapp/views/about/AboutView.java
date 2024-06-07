@@ -26,7 +26,7 @@ public class AboutView extends VerticalLayout {
 		
 		H2 title = new H2("QUIZ APP");
 			title.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
-		Paragraph subtitle = new Paragraph("A fun platform to quiz yourself and quickly create quizes 🤗");
+		Paragraph subtitle = new Paragraph("A fun platform to quiz yourself and quickly create quizzes 🤗");
 		Paragraph github = new Paragraph("Find out about the awesome Java tech used to create the app on: ");
 			github.add(new Anchor("https://github.com/UjfaA/SpringQuiz", "project's Github page"));
 		H4 warn = new H4("Quiz app is in development. There are features missing and content will get lost.");

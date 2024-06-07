@@ -1,25 +1,19 @@
-# SpringQuiz
-
-```diff
-+ Spring Quiz is being reimagined to expand its capabilities and integrate exciting new technologies.
-
-  The original (basic) implementation will continue to work in the meantime.
-```
+# Quiz App
 
 
-SpringQuiz is Demo Quiz web app. It is running on Heroku platform.  
-You can check it out at: [https://spring-quiz.herokuapp.com](https://spring-quiz.herokuapp.com)
+Quiz App is a web platform for quizzes. It is in an early alpha.  
+You can check it out at: [https://quizapp.fun](https://quizapp.fun)
+ 
+Quiz App is made with the help of awesome Java technology stack:
 
-After registering, the user is able to answer questions. At the end of the quiz, the user is presented with a score.  
-A user with appropriate account is able to add and delete questions and see user info and stats about the quiz.
+Vaadin: For building a dynamic and responsive web UI.  
+Spring Boot: To streamline the development and deployment process.  
+Spring Security: Ensuring secure access and authentication.  
+Spring AI: Leveraging AI capabilities to enhance the user experience.  
+EclipseStore: For efficient and scalable data storage.  
+Project Lombok: To minimize boilerplate code and enhance productivity.  
+ 
 
-The intent of this project is to explore using Spring with focus on Spring Data and other technologies.
-
-The project is made with the help of Spring Boot, Spring Web MVC, Spring Security, Spring Data JPA, MySQL and Project Lombok  
-and on the front-end side with Thymeleaf and W3.CSS.
-
-The project is now updated to Spring Boot 3.
-
-When running locally you will need to edit application.properties or configure environmental variables. You will need to change DDL settings.
+The project is an evolution of SpringQuiz. You can explore the previous iteration in the `basic` branch of this repository.
 
 Feel free to contact me about any question, suggestion etc.
