@@ -24,7 +24,11 @@ import fun.quizapp.views.quiz.QuestionsView;
 
 class QuizGalleryCard extends ListItem {
 
+	private final long qID;
+
 	QuizGalleryCard(Quiz quiz) {
+
+		qID = quiz.getId();
 
 		addClassNames(Background.CONTRAST_5, Display.FLEX, FlexDirection.COLUMN, AlignItems.START, Padding.MEDIUM, BorderRadius.LARGE);
 
@@ -56,6 +60,8 @@ class QuizGalleryCard extends ListItem {
 		add(imageContainer, title, subtitle, description);
 
 		addClickListener( click -> this.getUI().ifPresent( ui ->
-			ui.navigate(QuestionsView.class, quiz.getId())));
+			ui.navigate(QuestionsView.class, qID)));
 	}
+
+	long qID() {return qID;}
 }

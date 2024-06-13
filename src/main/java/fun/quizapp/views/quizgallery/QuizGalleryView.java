@@ -1,10 +1,13 @@
 package fun.quizapp.views.quizgallery;
 
+import static java.util.Comparator.comparingLong;
+import static java.util.List.copyOf;
 import static java.util.stream.Collectors.toCollection;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.html.OrderedList;
@@ -34,6 +37,7 @@ public class QuizGalleryView extends Main {
 	private final QuizService service;
 	private final AIService	aiService;
 	private final OrderedList quizContainer = new OrderedList();
+	private final Select<String> sortBy;
 
 	public QuizGalleryView( QuizService service, AIService aiService ) {
 		
@@ -48,10 +52,11 @@ public class QuizGalleryView extends Main {
 		H2 h2 = new H2("Pick an interesting quiz");
 		h2.addClassNames(Margin.Bottom.XLARGE, Margin.Top.XLARGE, FontSize.XXXLARGE);
 		
-		Select<String> sortBy = new Select<>();
+		sortBy = new Select<>();
 		sortBy.setLabel("Sort by");
 		sortBy.setItems("Popularity", "Newest first", "Oldest first");
 		sortBy.setValue("Popularity");
+		sortBy.addValueChangeListener( change -> displayQuizes());
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.addClassNames(AlignItems.BASELINE, JustifyContent.BETWEEN);
@@ -65,11 +70,20 @@ public class QuizGalleryView extends Main {
 	void displayQuizes() {
 		var quizes = service.getAll()
 				.map(QuizGalleryCard::new)
-				.collect(toCollection(ArrayList<Component>::new));
+				.collect(toCollection(ArrayList::new));
+		sort(quizes);
 		quizContainer.removeAll();
-		quizContainer.add(quizes);
+		quizContainer.add(copyOf(quizes));
 		quizContainer.addComponentAsFirst( new AIQuizGalleryCard(aiService) );
 		quizContainer.addComponentAsFirst( new NewQuizGalleryCard(service) );
+	}
+
+	private void sort(List<QuizGalleryCard> quizes) {
+		switch (sortBy.getValue()) {
+			case "Popularity"	-> Collections.shuffle(quizes);
+			case "Newest first" -> quizes.sort(comparingLong(QuizGalleryCard::qID).reversed());
+			case "Oldest first" -> quizes.sort(comparingLong(QuizGalleryCard::qID));
+		}
 	}
 
 }
