@@ -24,7 +24,7 @@ public class Question{
 	
 	/* validation */
 	@NotBlank
-	private String questionText;
+	private String questionText = "";
 	
 	/* validation */
 	@NotEmpty()

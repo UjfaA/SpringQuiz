@@ -12,11 +12,16 @@ public class Answer {
 
 
 	public Answer() {
-
+		this.text = "";
 	}
 
 	public Answer( String text ) {
 		this.text = text;
+	}
+	
+	public Answer ( String text, boolean correct) {
+		this.text = text;
+		this.correct = correct;
 	}
 
 }

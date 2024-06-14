@@ -55,7 +55,7 @@ public class QuizGalleryView extends Main {
 		sortBy = new Select<>();
 		sortBy.setLabel("Sort by");
 		sortBy.setItems("Popularity", "Newest first", "Oldest first");
-		sortBy.setValue("Popularity");
+		sortBy.setValue("Newest first");
 		sortBy.addValueChangeListener( change -> displayQuizes());
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();

@@ -1,6 +1,7 @@
 package fun.quizapp.views;
 
 import fun.quizapp.views.about.AboutView;
+import fun.quizapp.views.quizcreate.QuizCreateView;
 import fun.quizapp.views.quizgallery.QuizGalleryView;
 import fun.quizapp.views.quizmanagement.QuizMangementView;
 
@@ -55,6 +56,7 @@ public class MainLayout extends AppLayout {
 
 		nav.addItem(
 			new SideNavItem("Quiz Gallery", QuizGalleryView.class, LineAwesomeIcon.GLOBE_SOLID.create()),
+			new SideNavItem("Create New Quiz", QuizCreateView.class, LineAwesomeIcon.STAR.create()),
 			new SideNavItem("Quiz Management", QuizMangementView.class, LineAwesomeIcon.WRENCH_SOLID.create()),
 			new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
